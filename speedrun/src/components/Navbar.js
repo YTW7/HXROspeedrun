@@ -3,6 +3,7 @@ import { Inter } from 'next/font/google'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
 const inter = Inter({ subsets: ['latin'] })
 import { PublicKey } from '@solana/web3.js';
+import Link from "next/link";
 require('@solana/wallet-adapter-react-ui/styles.css')
 
 export default function Navbar() {
@@ -11,11 +12,11 @@ export default function Navbar() {
    <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
 
-    <button className="ml-5 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0">Leaderboard
-       
+    <button className="ml-5 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0">
+    <Link href="/Leaderboard">Leaderboard</Link>
        </button>
-   <button className="ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0">Project Submissions
-         
+   <button className="ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0">
+   <Link href="/Projects">Project Submissions</Link>
        </button>
       
       
