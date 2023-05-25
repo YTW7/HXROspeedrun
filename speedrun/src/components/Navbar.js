@@ -5,8 +5,40 @@ const inter = Inter({ subsets: ['latin'] })
 import { PublicKey } from '@solana/web3.js';
 import Link from "next/link";
 require('@solana/wallet-adapter-react-ui/styles.css')
+import { useWallet } from '@solana/wallet-adapter-react'
+import data from '../database/leadData';
+import { useEffect, useState } from 'react';
 
 export default function Navbar() {
+  const [leaderboardData, setLeaderboardData] = useState(data);
+  const { connected, publicKey } = useWallet()
+
+  useEffect(() => {
+    if (connected) {
+      const newPublicKey = publicKey.toString();
+
+      // Check if the publicKey already exists in the data
+      const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
+
+      if (!publicKeyExists) {
+        // Create a new object with the publicKey
+        const newLeaderboardData = [
+          ...leaderboardData,
+          {
+            publicKey: newPublicKey,
+            // Add other relevant properties
+          }
+        ];
+
+        // Update the leaderboard data
+        setLeaderboardData(newLeaderboardData);
+
+        // Save the updated JSON data to storage or update the state as required
+      }
+    }
+  }, [connected, publicKey]);
+
+
   return (
    <>
    <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
