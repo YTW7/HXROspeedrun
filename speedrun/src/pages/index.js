@@ -1,7 +1,7 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
-import Navbar from '@/components/Navbar'
 import Homepage from '@/components/Homepage'
+import ParimutuelJourney from '@/components/ParimutuelJourney'
 const inter = Inter({ subsets: ['latin'] })
 
 export default function Home() {
@@ -31,6 +31,8 @@ export default function Home() {
     </div>
    </div>
    </section>
+
+   <ParimutuelJourney/>
    
   
    </>
