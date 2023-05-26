@@ -3,13 +3,13 @@ const inter = Inter({ subsets: ['latin'] })
 import data from 'leadData'
 import { useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
-
+import { getAvatarUrl } from "../functions/gravatar"
 export default function LeadData() {
 
   const sortedData = [...data].sort((a, b) => b.points - a.points);
   const updatedData = sortedData.map((obj, index) => ({ ...obj, rank: index + 1 }));
-  const { connected, publicKey } = useWallet()
-
+  const { connected, publicKey } = useWallet();
+//   const avatar=getAvatarUrl(publicKey.toString());
 //   useEffect(() => {
 //     updatedData.map((obj, i) => <Tr {...obj} key={i} />)
  
@@ -76,7 +76,7 @@ function Tr({rank, username, points, publicKey }){
       <div class="p-2 w-full ">
         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
         <h2 class="text-gray-900 title-font font-medium mr-2 text-white">Rank {rank}</h2>
-          <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src="https://dummyimage.com/80x80"/>
+          <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={getAvatarUrl(publicKey)}/>
           <div class="flex-grow">
             <h2 class="title-font font-medium text-emerald-300">{username}</h2>
             <p class="text-pink-300">{points} Points</p>
