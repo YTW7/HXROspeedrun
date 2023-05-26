@@ -66,12 +66,11 @@ body {
   background-color: #fff;
   display: flex;
   flex-direction: column;
-  align-items: flex-end;
   padding: 15px;
   position: relative;
   width: 600px;
   max-width: 100%;
-  text-align: right;
+  
 }
 
 .timeline-item-content::after {
@@ -102,7 +101,7 @@ body {
   font-size: 12px;
   font-weight: bold;
   top: 5px;
-  left: 5px;
+  right: 5px;
   letter-spacing: 1px;
   padding: 5px;
   position: absolute;
@@ -124,7 +123,7 @@ body {
   font-size: 16px;
   line-height: 24px;
   margin: 15px 0;
-  max-width: 250px;
+  max-width: 550px;
 }
 
 .timeline-item-content a {
@@ -236,3 +235,4 @@ body.active-modal {
   right: 10px;
   padding: 5px 7px;
 }
+

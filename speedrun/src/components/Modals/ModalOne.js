@@ -16,7 +16,7 @@ export default function Modal() {
 
   return (
     <>
-      <button onClick={toggleModal} className="btn-modal bg-emerald-300 rounded-full">
+      <button onClick={toggleModal} className="btn-modal bg-emerald-300 rounded-full font-bold">
         Submit Progress
       </button>
 
@@ -38,7 +38,7 @@ export default function Modal() {
             
             </div>
             <div className="flex justify-center">
-            <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-2 py-1 mt-8 mb-2" onClick={toggleModal}>
+            <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2" onClick={toggleModal}>
               SUBMIT
             </button>
             {/* <a href="http://twitter.com/home?status=I%20am%20happy%20to%20share%20that%20I've%20completed%20the%20first%20task%20on%20@SpeedrunHXRO%20for%20Parimutuel%20SDK.%20%20@HxroNetwork%20@RealHxroLabs%20@ThalesHXRO">
