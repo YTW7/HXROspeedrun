@@ -8,6 +8,8 @@ require('@solana/wallet-adapter-react-ui/styles.css')
 import { useWallet } from '@solana/wallet-adapter-react'
 import data from '../database/leadData';
 import { useEffect, useState } from 'react';
+import axios from 'axios';
+
 
 export default function Navbar() {
   const [leaderboardData, setLeaderboardData] = useState(data);
@@ -19,21 +21,36 @@ export default function Navbar() {
 
       // Check if the publicKey already exists in the data
       const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
-
+      const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
       if (!publicKeyExists) {
         // Create a new object with the publicKey
         const newLeaderboardData = [
           ...leaderboardData,
           {
+           rank: maxValue+1,
+            username: "newuser",
             publicKey: newPublicKey,
-            // Add other relevant properties
+            points:0,
+            step2: false
           }
         ];
+
+        // Save the updated JSON data to storage or update the state as required
+        const updateData = async () => {
+          try {
+            await axios.post('/api/updateData', { newLeaderboardData });
+            console.log('data.json updated successfully');
+          } catch (error) {
+            console.error('Error updating data.json:', error);
+          }
+        };
+
+        updateData();
 
         // Update the leaderboard data
         setLeaderboardData(newLeaderboardData);
 
-        // Save the updated JSON data to storage or update the state as required
+        
       }
     }
   }, [connected, publicKey]);

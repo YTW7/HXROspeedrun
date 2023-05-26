@@ -1,12 +1,39 @@
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 import timelineData from '../database/timeline'
-import Modal from '../components/Modal';
+import Modal from '../components/Modals/ModalOne';
 import { useWallet } from '@solana/wallet-adapter-react';
+import data from 'leadData'
+import { AiFillLock } from 'react-icons/ai';
 
 export default function ParimutuelJourney() {
-
+    
+    let foundObj ={
+        "rank":6,
+        "username":"newuser",
+        "publicKey":"8Jeo1JwWhU2K7ivCaVrcd9e8q9bxLfBFXZb82pa21w9y",
+        "points":0,
+        "step2":false
+    }
     const { connected, publicKey } = useWallet()
+    if(connected){
+    foundObj = data.find(obj => obj.publicKey === publicKey);
+    }
+    const Locked = () => (
+        <div className="timeline-item">
+            <div className="timeline-item-content ">
+                <div className='flex justify-center '>
+                <div className='flex items-center mr-20 font-bold'>
+                <p>Please Submit Previous Task<br/> To Unlock</p>
+                </div>
+                <button className='bg-emerald-300 rounded-full py-2 px-2'>
+                <AiFillLock size={60}/>
+                </button>
+                </div>
+                <span className="circle" />
+            </div>
+        </div>
+    );
     const TimelineItem1 = () => (
         <div className="timeline-item">
             <div className="timeline-item-content">
@@ -71,7 +98,8 @@ export default function ParimutuelJourney() {
    {connected ? (
    <div className="timeline-container">
    <TimelineItem1/>
-   <TimelineItem2/>
+   {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
+   }
    </div>
    )
    :

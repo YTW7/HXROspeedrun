@@ -1,13 +1,20 @@
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
-import data from '../database/leadData'
+import data from 'leadData'
+import { useEffect } from 'react';
+import { useWallet } from '@solana/wallet-adapter-react';
 
 export default function LeadData() {
 
   const sortedData = [...data].sort((a, b) => b.points - a.points);
   const updatedData = sortedData.map((obj, index) => ({ ...obj, rank: index + 1 }));
+  const { connected, publicKey } = useWallet()
 
+//   useEffect(() => {
+//     updatedData.map((obj, i) => <Tr {...obj} key={i} />)
+ 
 
+// }, [connected, publicKey]);
   return (
    <>
       <table className="min-w-full table-auto mt-5 rounded-xl">
@@ -31,7 +38,8 @@ export default function LeadData() {
               <tbody className="bg-gray-200">
               {
                        updatedData.map((obj, i) => <Tr {...obj} key={i} />)
-                    }
+  
+            }
               </tbody>
         </table>
    </>
