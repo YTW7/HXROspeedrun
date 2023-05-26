@@ -13,7 +13,7 @@ export default function ParimutuelJourney() {
                 </span>
                 <time className='text-3xl'>{data.head}</time>
                 <code className='bg-emerald-200 rounded-md mt-3 font-bold'> 
-                    import * as web3 from "@solana/web3.js";<br/>
+                   import * as web3 from "@solana/web3.js";<br/>
                     import * as sdk from "@hxronetwork/parimutuelsdk"; <br/><br/>
                     const config = sdk.MAINNET_CONFIG<br/>
                     const rpc = web3.clusterApiUrl('mainnet-beta')<br/>
