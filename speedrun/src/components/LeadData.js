@@ -71,7 +71,7 @@ export default function LeadData() {
 // }
 function Tr({rank, username, points, publicKey }){
     return(
-        <tr className="bg-gray-50 flex bg-black">
+        <tr className="flex bg-black">
          <div class="flex flex-wrap w-full">
       <div class="p-2 w-full ">
         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
@@ -80,7 +80,7 @@ function Tr({rank, username, points, publicKey }){
           <div class="flex-grow">
             <h2 class="title-font font-medium text-emerald-300">{username}</h2>
             <p class="text-pink-300">{points} Points</p>
-            <p class="text-gray-500">{publicKey}</p>
+            <p class="text-blue-300">{publicKey}</p>
           </div>
         </div>
       </div>
