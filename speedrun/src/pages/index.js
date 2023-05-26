@@ -9,10 +9,10 @@ export default function Home() {
    <>
    
    <Homepage/>
-   <div>
+   <div style={{height:'100vh'}}>
     <h1 className='text-center text-6xl font-bold text-white my-12'>Choose a Journey 🚀</h1>
    <section className='grid grid-cols-2 '>
-   <div className='bg-emerald-300 h-56 rounded-xl my-5 mx-5 flex items-center justify-center'>
+   <div className='bg-emerald-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
     <div>
     <h1 className='text-center text-6xl font-bold mb-3'>Parimutuel SDK</h1> 
     <p>Learn to build a dual-outcome parimutuel market <br/> for a custom time frame.</p>
@@ -23,7 +23,7 @@ export default function Home() {
     </div>
    </div>
 
-   <div className='bg-pink-300 h-56 rounded-xl my-5 mx-5 flex items-center justify-center'>
+   <div className='bg-pink-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
     <div>
     <h1 className='text-center text-6xl font-bold mb-3'>Dexterity SDK</h1> 
     <p>Learn to build a dual-outcome parimutuel market <br/> for a custom time frame.</p>
