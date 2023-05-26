@@ -9,6 +9,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 import data from '../database/leadData';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
+import { AiFillHome } from 'react-icons/ai';
 
 
 export default function Navbar() {
@@ -60,7 +61,9 @@ export default function Navbar() {
    <>
    <div className="container mx-auto flex flex-wrap p-5 flex-col md:flex-row items-center">
     <nav className="flex lg:w-2/5 flex-wrap items-center text-base md:ml-auto">
-
+      <button className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 rounded py-2 px-2'>
+     <Link href="/"><AiFillHome color='white' size={30}/></Link>
+     </button>
     <button className="ml-5 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0">
     <Link href="/Leaderboard">Leaderboard</Link>
        </button>

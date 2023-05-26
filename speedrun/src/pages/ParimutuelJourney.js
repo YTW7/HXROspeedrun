@@ -48,8 +48,9 @@ export default function ParimutuelJourney() {
                     const rpc = web3.clusterApiUrl('mainnet-beta')<br/>
                     const connection = new web3.Connection(rpc, 'confirmed')<br/>
                     
-                    const parimutuelWeb3 = new sdk.ParimutuelWeb3(config, connection)
-                     
+                    const parimutuelWeb3 = new sdk.ParimutuelWeb3(config, connection)<br/>
+                    const market = sdk.MarketPairEnum.BTCUSD;<br/>
+                    
                 </code>
                 {
                     <Modal/>
@@ -95,6 +96,12 @@ export default function ParimutuelJourney() {
   return (
    <>
    {/* <Timeline/> */}
+   <div className='bg-emerald-300 h-56 rounded-xl my-5 mx-5 flex items-center'>
+    <div>
+    <h1 className='text-center text-6xl font-bold mb-3 ml-10'>Parimutuel SDK</h1> 
+    <p className='ml-10'>Learn to build a dual-outcome parimutuel market <br/> for a custom time frame.</p>
+    </div>
+   </div>
    {connected ? (
    <div className="timeline-container">
    <TimelineItem1/>
@@ -105,7 +112,7 @@ export default function ParimutuelJourney() {
    :
    (
     
-    <div  className='text-center text-6xl font-bold text-white mt-20'>Hello Friend 🤗, <br/><br/>Please Connect Wallet to Continue 🤙</div>
+    <div  className='text-center text-6xl font-bold text-white mt-20'>Hello Friend 🤗, <br/><br/>Please Connect Wallet to Continue 🤝</div>
    )
    }
    </>
