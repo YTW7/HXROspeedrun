@@ -371,7 +371,7 @@ export default function ParimutuelJourney() {
     <div>
     <h1 className='ml-10 text-6xl font-bold mb-3 '>Parimutuel SDK</h1> 
     
-    <p className='ml-10'>Learn to build a dual-outcome parimutuel script using TypeScript<br/> for a custom time frame.</p>
+    <p className='ml-10'>Learn to build a data-retrieval script from dual-outcome <br/>parimutuel markets using Typescript  for custom time frames.</p>
     
     </div>
     <div className='bg-black rounded-md mr-4'>
