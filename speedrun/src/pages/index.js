@@ -15,20 +15,42 @@ export default function Home() {
    <div className='bg-emerald-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
     <div>
     <h1 className='text-center text-6xl font-bold mb-3'>Parimutuel SDK</h1> 
-    <p>Learn to build a dual-outcome parimutuel market <br/> for a custom time frame.</p>
+    <p>Learn to build a dual-outcome parimutuel script using Typescript <br/> for a custom time frame.</p>
     <button className='bg-emerald-500 px-3 py-3 rounded-full mt-2 font-bold'>
       
       <Link href="/ParimutuelJourney">Let's Go Buidl!</Link>
     </button>
     </div>
    </div>
+   
 
    <div className='bg-pink-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
     <div>
     <h1 className='text-center text-6xl font-bold mb-3'>Dexterity SDK</h1> 
-    <p>Learn to build a dual-outcome parimutuel market <br/> for a custom time frame.</p>
+    <p>Learn how to connect to and use Hxro’s Dexterity Protocol <br/> for a custom time frame.</p>
     <button className='bg-pink-500 px-3 py-3 rounded-full mt-2 font-bold'>
       Let's Go Buidl!
+    </button>
+    </div>
+   </div>
+
+   <div className='bg-emerald-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
+    <div>
+    <h1 className='text-center text-6xl font-bold mb-3'>Parimutuel + React</h1> 
+    <p>Learn how to build a dAPP UI that allows users to place positions, and <br/>various other interactions.</p>
+    <button className='bg-emerald-500 px-3 py-3 rounded-full mt-2 font-bold'>
+      Let's Go Buidl!
+    </button>
+    </div>
+   </div>
+
+    <div className='bg-blue-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
+    <div>
+    <h1 className='text-center text-6xl font-bold mb-3'>Coming Soon!</h1> 
+    <p>Learn to build [redacted] only on SpeedrunHXRO<br/> and stay ahead of the curve</p>
+    <button className='bg-blue-400 px-3 py-3 rounded-full mt-2 font-bold'>
+      
+      <Link href="/ParimutuelJourney">Get Instant Updates!</Link>
     </button>
     </div>
    </div>
