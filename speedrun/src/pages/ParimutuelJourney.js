@@ -108,32 +108,142 @@ export default function ParimutuelJourney() {
                 <time className='text-3xl'>{"Retrieving Contests for a Market"}</time>
                 <p>
                 
-                To retrieve all of the Contests for the BTCUSD market pair.<br/><br/>
-                To filter for the market pair that we want, use the getMarketPubkeys(*config, marketPair*) function, and pass in the config object for *config* and MarketPairEnum.BTCUSD for *marketPair*. This will return an array with all the markets for each expiry and their contests for each expiry in the BTCUSD pair.
+                1. To retrieve all of the Contests for the BTCUSD market pair.<br/><br/>
+                To filter for the market pair that we want, use the <b>getMarketPubkeys(config, marketPair)</b> function, and pass in the <b>config</b> object for <b>config</b> and <b>MarketPairEnum.BTCUSD</b> for <b>marketPair</b>.<br/> This will return an array with all the markets for each expiry and their contests for each expiry in the BTCUSD pair.
                 </p>
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 py-2'> 
-                   import * as web3 from "@solana/web3.js";<br/>
-                    import * as sdk from "@hxronetwork/parimutuelsdk"; <br/><br/>
-                    const config = sdk.MAINNET_CONFIG<br/>
-                    const rpc = web3.clusterApiUrl('mainnet-beta')<br/>
-                    const connection = new web3.Connection(rpc, 'confirmed')<br/><br/>
-                    
-                    const parimutuelWeb3 = new sdk.ParimutuelWeb3(config, connection)<br/>
-                    const market = sdk.MarketPairEnum.BTCUSD;<br/>
-                    const markets = sdk.getMarketPubkeys(config, market);<br/>
-                    const marketTerm = 60; // The expires are in seconds, so this would be the 1 min<br/>
-                    const marketsByTime = markets.filter(<br/>
-                      (market) ={">"} market.duration === marketTerm<br/>
-                    );<br/><br/>
-                    
-                    {"const Paris = async () => {"}<br/>
-                        
-                      {"const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);"}<br/>
-                    
-                     
-                    {"};"}<br/>
-                    
+                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
+                const market = sdk.MarketPairEnum.BTCUSD<br/>
+                const markets = sdk.getMarketPubkeys(config, market);
                 </code>
+                <p>
+                2. To filter for the expiry interval, use the <b>.filter()</b> method on the <b>markets</b> array, and pass in a callback function that checks if the <b>duration</b> property of each element is equal to the desired expiry time in seconds.<br/> For example, to filter for a 1-minute expiry interval:
+                </p>
+                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'> 
+                const marketTerm = 60 // The expires are in seconds, so this would be the 1 min
+                <br/><br/>
+                const marketsByTime = markets.filter(
+                      (market) ={'>'} market.duration === marketTerm
+                    );
+                </code>
+
+                <p>
+                3. To retrieve all of the paris contests for the BTCUSD market, use the getParimutuels(*markets, number*) function and pass in the marketsByTime array for *markets*, and the number of contests you want to retrieve for *number*. This function should be called from an asynchronous function:
+                </p>
+                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'> 
+                {'const Paris = async () => {'}<br/>
+
+                {'const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);'}<br/>
+                {'}'}
+                </code>
+
+                {
+                    <Modal/>
+                }
+                <span className="circle" />
+            </div>
+        </div>
+    );
+    const TimelineItem4 = () => (
+        <div className="timeline-item">
+            <div className="timeline-item-content">
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                    {"+10 Points"}
+                </span>
+                <time className='text-3xl'>{"Info Zap: Understanding Required Parameters"}</time>
+                <p>
+
+                The "parimutuels" variable will give us an array of objects, with each object representing a Contest for the BTCUSD pair in the 1 min expiration interval. 
+
+                To better understand what a Contest object looks like, we can retrieve the first element in the array using parimutuels[0] and convert it to a string using JSON.stringify(). Then, we can print the string to the console by calling the **Paris()**function.
+                </p>
+                <code>
+                {'const Paris = async () => {'}
+
+                    const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);
+                    
+                    console.log(JSON.stringify(parimutuels[0]))
+                   {' };'}
+                    
+                    Paris()
+                </code>
+                <p>
+                After calling the Paris() function, you should have printed out a whole lot of data in your console,
+                but we won't be using all of this data yet. First, we will focus on the info of each Contest
+
+                To start, we want to display the following information for each contest:
+                    strike: the mark price in USDC at which the contest will exercise
+                    slot: the unique identifier number of the contest
+                    activeLongPositions: the amount of USDC in the "Long" side of the pool
+                    activeShortPositions: the amount of USDC in the "Short" side of the pool
+                    expired: a boolean value indicating whether the contest has expired or not
+                    Note: values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
+                </p>
+                
+                 
+                
+
+                {
+                    <Modal/>
+                }
+                <span className="circle" />
+            </div>
+        </div>
+    );
+    const TimelineItem5 = () => (
+        <div className="timeline-item">
+            <div className="timeline-item-content">
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                    {"+10 Points"}
+                </span>
+                <time className='text-3xl'>{"Displaying Required Parameters"}</time>
+                <p>
+
+                To display this information, we can use a forEach loop to iterate through the parimutuels array. We will assign the variable cont for each object in the array and access the relevant data within the info.parimutuel section of the object. Then, we will print the information to the console for each contest. Here's how we can do this:
+                </p>
+                <code>
+                {'const Paris = async () => {'}
+                   
+                   const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);
+                   
+                     console.log(`\\nMarket Pair: BTCUSD\\nMarket Expiry Interval: 1 min\\n`)
+                   
+                     const usdcDec = 1_000_000
+                   
+                   {'parimutuels.forEach((cont) => {'}
+                       const strike = cont.info.parimutuel.strike.toNumber() / usdcDec
+                             const slotId = cont.info.parimutuel.slot.toNumber()
+                             const longSide = cont.info.parimutuel.activeLongPositions.toNumber() / usdcDec
+                             const shortSide = cont.info.parimutuel.activeShortPositions.toNumber() / usdcDec
+                             const expired = cont.info.parimutuel.expired
+                   
+                             console.log(`\\nStrike: $ {'${strike}'}\\nSlot:{' ${slotId}'}\\nLongs: $ {'${longSide}'}\\nShorts: $ {'${shortSide}'}\\nExprired?: {'${expired?'} 'true' : 'false'{'}'}`)
+                   {'})'}
+                   {'};'}
+                   
+                   Paris()
+                </code>
+                <p>
+                You should be getting something like this in your console now:
+                </p>
+                <code>
+                Market Pair: BTCUSD
+                Market Expiry Interval: 1 min
+                
+                Strike: $ 1680400.999999
+                Slot: 1671990780
+                Longs: $ 249.841564
+                Shorts: $ 252.0767
+                Exprired?: true
+
+                Strike: $ 1680495.75
+                Slot: 1671990840
+                Longs: $ 248.210444
+                Shorts: $ 251.789555
+                Exprired?: true
+                </code>
+                 
+                
+
                 {
                     <Modal/>
                 }
@@ -158,7 +268,7 @@ export default function ParimutuelJourney() {
     <div>
     <h1 className='ml-10 text-6xl font-bold mb-3 '>Parimutuel SDK</h1> 
     
-    <p className='ml-10'>Learn to build a dual-outcome parimutuel script <br/> for a custom time frame.</p>
+    <p className='ml-10'>Learn to build a dual-outcome parimutuel script using TypeScript<br/> for a custom time frame.</p>
     
     </div>
     <div className='bg-black rounded-md mr-4'>
@@ -180,6 +290,8 @@ export default function ParimutuelJourney() {
    <TimelineItem1/>
    <TimelineItem2/> 
    <TimelineItem3/> 
+   <TimelineItem4/> 
+   <TimelineItem5/> 
    {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
    }
    </div>
