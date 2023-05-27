@@ -69,7 +69,7 @@ export default function ParimutuelJourney() {
         });
       };
       const scrollSix = () => {
-        scroll.scrollTo(1650, {
+        scroll.scrollTo(5950, {
           duration: 1000, // Adjust the duration as needed
           smooth: 'easeInOutQuart', // Adjust the easing function as needed
         });
@@ -95,7 +95,7 @@ export default function ParimutuelJourney() {
                 {
                    <button onClick={scrollOne} className="btn-modal bg-emerald-300 rounded-full font-bold">
                     
-                   Submit 
+                   Submit
                  </button>
                 }
                 <span className="circle" />
@@ -239,7 +239,7 @@ export default function ParimutuelJourney() {
         <div className="timeline-item">
             <div className="timeline-item-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
-                    {"+10 Points"}
+                    {"+20 Points"}
                 </span>
                 <time className='text-3xl'>{"Displaying Required Parameters"}</time>
                 <p>
@@ -305,7 +305,7 @@ export default function ParimutuelJourney() {
         <div className="timeline-item">
             <div className="timeline-item-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
-                    {"+10 Points"}
+                    {"+30 Points"}
                 </span>
                 <time className='text-3xl'>{"Get Odds for each contest"}</time>
                 <p>

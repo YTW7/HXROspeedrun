@@ -3,7 +3,10 @@ import { Html, Head, Main, NextScript } from 'next/document'
 export default function Document() {
   return (
     <Html lang="en">
-      <Head />
+      <Head>
+      <title>SpeedrunHXRO</title>
+      <link rel='icon' href='/logofinal.png'/>
+      </Head>
       <body>
         <Main />
         <NextScript />

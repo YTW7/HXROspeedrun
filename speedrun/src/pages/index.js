@@ -9,6 +9,7 @@ export default function Home() {
    <>
    
    <Homepage/>
+   
    <div style={{height:'100vh'}}>
     <h1 className='text-center text-6xl font-bold text-white my-12'>Choose a Journey 🚀</h1>
    <section className='grid grid-cols-2 '>
