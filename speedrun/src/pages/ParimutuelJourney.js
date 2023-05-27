@@ -2,10 +2,13 @@ import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 import timelineData from '../database/timeline'
 import Modal from '../components/Modals/ModalOne';
+import ModalNFT from '../components/Modals/ModalNFT';
 import { useWallet } from '@solana/wallet-adapter-react';
 import data from 'leadData'
 import Link from 'next/link';
 import { AiFillLock } from 'react-icons/ai';
+import { animateScroll as scroll } from 'react-scroll';
+// import 'react-scroll/dist/react-scroll.css';
 
 export default function ParimutuelJourney() {
     
@@ -35,8 +38,44 @@ export default function ParimutuelJourney() {
             </div>
         </div>
     );
+    const scrollOne = () => {
+        scroll.scrollTo(800, {
+          duration: 700, // Adjust the duration as needed
+          smooth: 'easeInOutQuart', // Adjust the easing function as needed
+        });
+      };
+      const scrollTwo = () => {
+        scroll.scrollTo(1650, {
+          duration: 1000, // Adjust the duration as needed
+          smooth: 'easeInOutQuart', // Adjust the easing function as needed
+        });
+      };
+      const scrollThree = () => {
+        scroll.scrollTo(2660, {
+          duration: 1500, // Adjust the duration as needed
+          smooth: 'easeInOutQuart', // Adjust the easing function as needed
+        });
+      };
+      const scrollFour = () => {
+        scroll.scrollTo(3670, {
+          duration: 1500, // Adjust the duration as needed
+          smooth: 'easeInOutQuart', // Adjust the easing function as needed
+        });
+      };
+      const scrollFive = () => {
+        scroll.scrollTo(5350, {
+          duration: 1500, // Adjust the duration as needed
+          smooth: 'easeInOutQuart', // Adjust the easing function as needed
+        });
+      };
+      const scrollSix = () => {
+        scroll.scrollTo(1650, {
+          duration: 1000, // Adjust the duration as needed
+          smooth: 'easeInOutQuart', // Adjust the easing function as needed
+        });
+      };
     const TimelineItem1 = () => (
-        <div className="timeline-item">
+        <div className="timeline-item ">
             <div className="timeline-item-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+10 Points"}
@@ -54,14 +93,17 @@ export default function ParimutuelJourney() {
                     
                 </code>
                 {
-                    <Modal/>
+                   <button onClick={scrollOne} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    
+                   Submit 
+                 </button>
                 }
                 <span className="circle" />
             </div>
         </div>
     );
     const TimelineItem2 = () => (
-        <div className="timeline-item">
+        <div className="timeline-item" id="timeline-item-2">
             <div className="timeline-item-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+20 Points"}
@@ -93,14 +135,16 @@ export default function ParimutuelJourney() {
                 </ul>
                 </p>
                 {
-                    <Modal/>
+                    <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    Submit 
+                  </button>
                 }
                 <span className="circle" />
             </div>
         </div>
     );
     const TimelineItem3 = () => (
-        <div className="timeline-item">
+        <div className="timeline-item" id="timeline-item-2">
             <div className="timeline-item-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+10 Points"}
@@ -137,7 +181,10 @@ export default function ParimutuelJourney() {
                 </code>
 
                 {
-                    <Modal/>
+                    // <Modal/>
+                    <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    Submit 
+                  </button>
                 }
                 <span className="circle" />
             </div>
@@ -152,38 +199,37 @@ export default function ParimutuelJourney() {
                 <time className='text-3xl'>{"Info Zap: Understanding Required Parameters"}</time>
                 <p>
 
-                The "parimutuels" variable will give us an array of objects, with each object representing a Contest for the BTCUSD pair in the 1 min expiration interval. 
+                The "parimutuels" variable will give us an array of objects, with each object representing a <b>Contest</b> for the <b>BTCUSD</b> pair in the <b>1 min</b> expiration interval. <br/><br/>
 
-                To better understand what a Contest object looks like, we can retrieve the first element in the array using parimutuels[0] and convert it to a string using JSON.stringify(). Then, we can print the string to the console by calling the **Paris()**function.
+                To better understand what a <b>Contest</b> object looks like, we can retrieve the first element in the array using <b>parimutuels[0]</b> and convert it to a string using <b>JSON.stringify()</b>. Then, we can print the string to the console by calling the <b>Paris()</b> function.
                 </p>
-                <code>
-                {'const Paris = async () => {'}
+                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                {'const Paris = async () => {'}<br/><br/>
 
-                    const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);
+                    const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);<br/><br/>
                     
-                    console.log(JSON.stringify(parimutuels[0]))
-                   {' };'}
+                    console.log(JSON.stringify(parimutuels[0]))<br/>
+                   {' };'}<br/><br/>
                     
                     Paris()
                 </code>
                 <p>
-                After calling the Paris() function, you should have printed out a whole lot of data in your console,
-                but we won't be using all of this data yet. First, we will focus on the info of each Contest
-
-                To start, we want to display the following information for each contest:
-                    strike: the mark price in USDC at which the contest will exercise
-                    slot: the unique identifier number of the contest
-                    activeLongPositions: the amount of USDC in the "Long" side of the pool
-                    activeShortPositions: the amount of USDC in the "Short" side of the pool
-                    expired: a boolean value indicating whether the contest has expired or not
-                    Note: values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
+                After calling the <b>Paris()</b> function, you should have printed out a whole lot of data in your console,
+                but we won't be using all of this data yet.<br/><br/> First, we will focus on the info of each Contest
+                <br/><br/>
+                To start, we want to display the following information for each contest:<br/><br/>
+                <b className=' ml-2'>strike:</b> the mark price in USDC at which the contest will exercise<br/>
+                <b className=' ml-2'>slot:</b> the unique identifier number of the contest<br/>
+                <b className=' ml-2'>activeLongPositions:</b> the amount of USDC in the "Long" side of the pool<br/>
+                <b className=' ml-2'>activeShortPositions:</b> the amount of USDC in the "Short" side of the pool<br/>
+                <b className=' ml-2'>expired:</b> a boolean value indicating whether the contest has expired or not<br/><br/>
+                <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
                 </p>
-                
-                 
-                
-
                 {
-                    <Modal/>
+                    // <Modal/>
+                    <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    Submit 
+                  </button>
                 }
                 <span className="circle" />
             </div>
@@ -198,54 +244,95 @@ export default function ParimutuelJourney() {
                 <time className='text-3xl'>{"Displaying Required Parameters"}</time>
                 <p>
 
-                To display this information, we can use a forEach loop to iterate through the parimutuels array. We will assign the variable cont for each object in the array and access the relevant data within the info.parimutuel section of the object. Then, we will print the information to the console for each contest. Here's how we can do this:
+                To display this information, we can use a <b>forEach</b> loop to iterate through the <b>parimutuels</b> array. <br/>We will assign the variable <b>cont for each object in the array</b> and access the relevant data within the <b>info.parimutuel</b> section of the object.<br/> Then, we will print the information to the console for each contest. Here's how we can do this:
                 </p>
-                <code>
-                {'const Paris = async () => {'}
+                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                {'const Paris = async () => {'}<br/><br/>
                    
-                   const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);
+                   const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);<br/><br/>
                    
-                     console.log(`\\nMarket Pair: BTCUSD\\nMarket Expiry Interval: 1 min\\n`)
+                     console.log(`\\nMarket Pair: BTCUSD\\nMarket Expiry Interval: 1 min\\n`)<br/><br/>
                    
-                     const usdcDec = 1_000_000
+                     const usdcDec = 1_000_000<br/><br/>
                    
-                   {'parimutuels.forEach((cont) => {'}
-                       const strike = cont.info.parimutuel.strike.toNumber() / usdcDec
-                             const slotId = cont.info.parimutuel.slot.toNumber()
-                             const longSide = cont.info.parimutuel.activeLongPositions.toNumber() / usdcDec
-                             const shortSide = cont.info.parimutuel.activeShortPositions.toNumber() / usdcDec
-                             const expired = cont.info.parimutuel.expired
+                   {'parimutuels.forEach((cont) => {'}<br/>
+                       const strike = cont.info.parimutuel.strike.toNumber() / usdcDec;<br/><br/>
+                             const slotId = cont.info.parimutuel.slot.toNumber();<br/><br/>
+                             const longSide = cont.info.parimutuel.activeLongPositions.toNumber() / usdcDec;<br/><br/>
+                             const shortSide = cont.info.parimutuel.activeShortPositions.toNumber() / usdcDec;<br/><br/>
+                             const expired = cont.info.parimutuel.expired<br/><br/>
                    
-                             console.log(`\\nStrike: $ {'${strike}'}\\nSlot:{' ${slotId}'}\\nLongs: $ {'${longSide}'}\\nShorts: $ {'${shortSide}'}\\nExprired?: {'${expired?'} 'true' : 'false'{'}'}`)
-                   {'})'}
-                   {'};'}
+                             console.log(`\\nStrike: $ {'${strike}'}<br/>\\nSlot:{' ${slotId}'}<br/>\\nLongs: $ {'${longSide}'}<br/>\\nShorts: $ {'${shortSide}'}<br/>\\nExprired?: {'${expired?'} 'true' : 'false'{'}'}`)<br/>
+                   {'})'}<br/>
+                   {'};'}<br/><br/>
                    
-                   Paris()
+                   Paris()<br/><br/>
                 </code>
                 <p>
                 You should be getting something like this in your console now:
                 </p>
-                <code>
-                Market Pair: BTCUSD
-                Market Expiry Interval: 1 min
+                <code className='bg-blue-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                Market Pair: BTCUSD<br/>
+                Market Expiry Interval: 1 min<br/><br/>
                 
-                Strike: $ 1680400.999999
-                Slot: 1671990780
-                Longs: $ 249.841564
-                Shorts: $ 252.0767
-                Exprired?: true
+                Strike: $ 1680400.999999<br/>
+                Slot: 1671990780<br/>
+                Longs: $ 249.841564<br/>
+                Shorts: $ 252.0767<br/>
+                Exprired?: true<br/><br/>
 
-                Strike: $ 1680495.75
-                Slot: 1671990840
-                Longs: $ 248.210444
-                Shorts: $ 251.789555
-                Exprired?: true
+                Strike: $ 1680495.75<br/>
+                Slot: 1671990840<br/>
+                Longs: $ 248.210444<br/>
+                Shorts: $ 251.789555<br/>
+                Exprired?: true<br/>
                 </code>
                  
                 
 
                 {
-                    <Modal/>
+                    // <Modal/>
+                    <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    Submit 
+                  </button>
+                }
+                <span className="circle" />
+            </div>
+        </div>
+    );
+
+    const TimelineItem6 = () => (
+        <div className="timeline-item">
+            <div className="timeline-item-content">
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                    {"+10 Points"}
+                </span>
+                <time className='text-3xl'>{"Get Odds for each contest"}</time>
+                <p>
+
+                We can use the function <b>calculateOdd: (side, total)</b> from the SDK by passing in the <b>side</b> that we want to get the Odds for <b>side</b> and the sum of both <b>longSide</b> and <b>shortSide</b> for <b>totalVolume</b> .
+                </p>
+                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                const totalVolume = longSide + shortSide <br/><br/>
+
+
+                const longOdds = sdk.calculateNetOdd(longSide, totalVolume, 0.03)<br/>
+
+                const shortOdds = sdk.calculateNetOdd(shortSide, totalVolume, 0.03)<br/>
+
+                
+                // Pass in 0.03 to take into account the 3% Hxro Network standard fee 
+                // (50% of it goes to stakers)
+                </code>
+                <p>
+                We've now successfully used the Paris Network to retrieve contest and market data.
+                </p>
+
+                {
+                    // <ModalNFT/>
+                    <button onClick={scrollSix} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    Submit 
+                  </button>
                 }
                 <span className="circle" />
             </div>
@@ -260,7 +347,23 @@ export default function ParimutuelJourney() {
     //             ))}
     //         </div>
     //     );
-
+    const ClaimNFT = () => (
+        <div className="timeline-item">
+            <div className="timeline-item-content ">
+                <div >
+                <div className='mr-20 '>
+                <h1 className='text-center text-xl font-bold ml-20 pb-3'>Claim your Journey Completion NFT 🎉</h1>
+                </div>
+                <img  className='rounded-xl' src='/nft.png' width={600}/>
+                <button className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    Claim
+                  </button>
+                
+                </div>
+                <span className="circle" />
+            </div>
+        </div>
+    );
   return (
    <>
    {/* <Timeline/> */}
@@ -292,8 +395,11 @@ export default function ParimutuelJourney() {
    <TimelineItem3/> 
    <TimelineItem4/> 
    <TimelineItem5/> 
-   {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
-   }
+   <TimelineItem6/>
+   <ClaimNFT/>
+   
+   {/* {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
+   } */}
    </div>
    )
    :
