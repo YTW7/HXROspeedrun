@@ -1,32 +1,32 @@
 [
     {
         "rank": 1,
-        "username": "Yahya",
-        "publicKey": "EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 100
+        "username": "Toly",
+        "publicKey": "1EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
+        "points": 700
     },
     {
         "rank": 2,
-        "username": "Yahya2",
-        "publicKey": "EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 102
+        "username": "Dan",
+        "publicKey": "2EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
+        "points": 670
     },
     {
         "rank": 3,
-        "username": "Yahya3",
-        "publicKey": "EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 200
+        "username": "Raj",
+        "publicKey": "3EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
+        "points": 500
     },
     {
         "rank": 4,
-        "username": "Yahya4",
-        "publicKey": "EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
+        "username": "Armani",
+        "publicKey": "4EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
         "points": 500
     },
     {
         "rank": 5,
-        "username": "Yahya5",
-        "publicKey": "EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 10
+        "username": "Thales",
+        "publicKey": "5EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
+        "points": 600
     }
 ]
