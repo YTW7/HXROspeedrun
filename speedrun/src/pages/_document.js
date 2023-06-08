@@ -5,7 +5,7 @@ export default function Document() {
     <Html lang="en">
       <Head>
       <title>SpeedrunHXRO</title>
-      <link rel='icon' href='/logofinal.png'/>
+      <link rel='icon' href='/icon.png'/>
       </Head>
       <body>
         <Main />

@@ -19,10 +19,14 @@ export default function ParimutuelJourney() {
         "points":0,
         "step2":false
     }
-    const { connected, publicKey } = useWallet()
-    if(connected){
+    const { connected, publicKey } = useWallet();
+    
+    if(connected)
+    {
     foundObj = data.find(obj => obj.publicKey === publicKey);
     }
+
+
     const Locked = () => (
         <div className="timeline-item">
             <div className="timeline-item-content ">
@@ -38,6 +42,8 @@ export default function ParimutuelJourney() {
             </div>
         </div>
     );
+
+
     const scrollOne = () => {
         scroll.scrollTo(800, {
           duration: 700, // Adjust the duration as needed
@@ -74,6 +80,7 @@ export default function ParimutuelJourney() {
           smooth: 'easeInOutQuart', // Adjust the easing function as needed
         });
       };
+
     const TimelineItem1 = () => (
         <div className="timeline-item ">
             <div className="timeline-item-content">
@@ -93,15 +100,17 @@ export default function ParimutuelJourney() {
                     
                 </code>
                 {
-                   <button onClick={scrollOne} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                //    <button onClick={scrollOne} className="btn-modal bg-emerald-300 rounded-full font-bold">
                     
-                   Submit
-                 </button>
+                //    Submit
+                //  </button>
+                <Modal/>
                 }
                 <span className="circle" />
             </div>
         </div>
     );
+
     const TimelineItem2 = () => (
         <div className="timeline-item" id="timeline-item-2">
             <div className="timeline-item-content">
@@ -143,6 +152,7 @@ export default function ParimutuelJourney() {
             </div>
         </div>
     );
+
     const TimelineItem3 = () => (
         <div className="timeline-item" id="timeline-item-2">
             <div className="timeline-item-content">
@@ -390,7 +400,7 @@ export default function ParimutuelJourney() {
    </div>
    {connected ? (
    <div className="timeline-container">
-   <TimelineItem1/>
+    (if(Progress.P1T1==true)?<TimelineItem1/>:<Locked/>)
    <TimelineItem2/> 
    <TimelineItem3/> 
    <TimelineItem4/> 

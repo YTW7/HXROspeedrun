@@ -3,7 +3,15 @@
         "rank": 1,
         "username": "Toly",
         "publicKey": "1EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 700
+        "points": 700,
+        "progress":{
+            "P1T1":false,
+            "P1T2":false,
+            "P1T3":false,
+            "P1T4":false,
+            "P1T5":false,
+            "P1T6":false
+        }
     },
     {
         "rank": 2,

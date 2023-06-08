@@ -1,6 +1,6 @@
 import React, { useState } from "react";
 import { AiFillTwitterCircle } from 'react-icons/ai';
-
+import { ImCross } from 'react-icons/im';
 export default function Modal() {
   const [modal, setModal] = useState(false);
 
@@ -25,16 +25,16 @@ export default function Modal() {
           <div onClick={toggleModal} className="overlay"></div>
           <div className="modal-content">
             <h2 className="text-center font-bold text-emerald-500 text-2xl">Submit Your Progress!</h2>
-            <div className="flex justify-center w-100">
+            <div className="flex justify-center w-200">
             <p>
-              Make a new git branch,<br/> With the step number and <br/>Submit the branch link here: 
+             1. Make a new git branch,<br/> 2. With the step number and <br/>3. Submit the branch link here: 
             </p>
             </div>
-            <button className="close-modal bg-red-300 rounded-full hover:text-white font-bold" onClick={toggleModal}>
-              CLOSE
+            <button className="close-modal  rounded-lg hover:text-white font-bold" onClick={toggleModal}>
+            <ImCross size={25}/>
             </button>
-            <div className="flex justify-center">
-            <input className=" rounded-md px-2 py-1" placeholder="git branch link"></input>
+            <div className="flex justify-center w-300">
+            <input className=" rounded-md px-2 py-1 " placeholder="git branch link"></input>
             
             </div>
             <div className="flex justify-center">
