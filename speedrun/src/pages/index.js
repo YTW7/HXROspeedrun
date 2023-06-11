@@ -28,9 +28,9 @@ export default function Home() {
    <div className='bg-pink-300 h-96 rounded-xl my-5 mx-5 flex items-center justify-center'>
     <div>
     <h1 className='text-center text-6xl font-bold mb-3'>Dexterity SDK</h1> 
-    <p className='mb-3'>Learn how to connect to and use Hxro’s Dexterity Protocol <br/> for a custom time frame.</p>
+    <p className='mb-3'>Learn how to connect to and use Hxro’s Dexterity Protocol <br/></p>
     <button className='bg-pink-500 px-3 py-3 rounded-full mt-2 font-bold'>
-      Let's Go Buidl!
+    <Link href="/DexterityJourney">Let's Go Buidl!</Link>
     </button>
     </div>
    </div>

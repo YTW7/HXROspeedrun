@@ -93,21 +93,22 @@ export default function ParimutuelJourney() {
 
 
     const TimelineItem1 = () => (
-        <div className="timeline-item ">
-            <div className="timeline-item-content">
+        <div className="timeline-item-dex ">
+            <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+10 Points"}
                 </span>
-                <time className='text-3xl'>{"Import Dependencies & Connect to the Parimutuel Protocol"}</time>
+                <time className='text-3xl'>{"Import Dependencies & Setting up an RPC"}</time>
                 
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 py-2'> 
-                   import * as web3 from "@solana/web3.js";<br/>
-                    import * as sdk from "@hxronetwork/parimutuelsdk"; <br/><br/>
-                    const config = sdk.MAINNET_CONFIG<br/>
-                    const rpc = web3.clusterApiUrl('mainnet-beta')<br/>
-                    const connection = new web3.Connection(rpc, 'confirmed')<br/><br/>
-                    
-                    const parimutuelWeb3 = new sdk.ParimutuelWeb3(config, connection)<br/>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2'> 
+                    import {'{ clusterApiUrl, Keypair, PublicKey }'} from "@solana/web3.js";<br/>
+                    import {'{ Wallet }'} from "@project-serum/anchor";<br/>
+                    import dexterityTs from "@hxronetwork/dexterity-ts";<br/>
+                    const dexterity = dexterityTs;<br/>
+                    import bs58 from 'bs58'<br/><br/>
+                    //Setting up the RPC<br/>
+                    const CLUSTER_NAME = "testnet";<br/>
+                    const rpc = clusterApiUrl(CLUSTER_NAME);<br/>
                     
                 </code>
                 {
@@ -123,39 +124,28 @@ export default function ParimutuelJourney() {
     );
 
     const TimelineItem2 = () => (
-        <div className="timeline-item" id="timeline-item-2">
-            <div className="timeline-item-content">
+        <div className="timeline-item-dex" id="timeline-item-2">
+            <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+20 Points"}
                 </span>
-                <time className='text-3xl'>{"Info Zap: Retrieving Data from the Network"}</time>
+                <time className='text-3xl'>{"Setting up a Test Wallet"}</time>
                 <p>
-                Now that you have connected to the network, let's look at how to retrieve data from it.
-                <br/><br/>
-                <b>Understanding Markets and Contests:</b><br/><br/>
-                Before we start, there are some key terms you should be familiar with:<br/><br/>
-                <ul>
-                <li className='list-disc ml-6'><b>Markets</b> are the different parimutuel markets for a specific underlying asset pair.<br/>  For example,on the <b>Paris</b>(short for Parimutuels) protocol, there are currently three main markets that can be accessed through MarketPairEnum:
-                <li className='list-disc ml-6'>MarketPairEnum.BTCUSD</li>
-                <li className='list-disc ml-6'>MarketPairEnum.ETHUSD</li>
-                <li className='list-disc ml-6'>MarketPairEnum.SOLUSD</li>
-                At the time of writing, liquidity is being solely allocated to the BTCUSD market pair.
-                </li>
+                To sign transactions and create the TRG account, set up your wallet with your private key. Replace the priv_key variable with your own private key.
                 <br/>
-                <li className='list-disc ml-6'>
-                <b>Contests</b> represent the individual trading events in a paris market. For example:<br/>
-                <b>Contest #1:</b><br/>
-                <b className=' ml-2'>-Market:</b> BTCUSD<br/>
-                <b className='ml-2'>-Time</b> 5 minutes<br/>
-                <b className='ml-2'>-Slot ID:</b> 123<br/>
-                <b className='ml-2'>-Long Pool:</b> $100.00<br/>
-                <b className='ml-2'>-Short Pool:</b> $200.00<br/>
-                <b className='ml-2'>-etc.</b>
-                </li>
-                </ul>
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
+                const priv_key = "YOUR-PRIVATE-KEY"<br/>
+                const keypair = Keypair.fromSecretKey{'('}<br/>
+                    bs58.decode(priv_key)<br/>
+                {')'};<br/>
+                const wallet = new Wallet(keypair);<br/>
+                </code><br/>
+                <p>
+                It is highly recommended that you create a new wallet to be used exclusively for testing purposes. This can be done via Phantom or any other Solana wallet, subsequently allowing you to retrieve the private key, and use it in your project. Once you have set up your wallet,<br/> you can then airdrop <b>Testnet SOL</b> to it from <a className="underline" href='https://solfaucet.com/'>here</a>.
                 </p>
                 {
-                    <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    <button onClick={scrollTwo} className="btn-modal bg-pink-300 rounded-full font-bold">
                     Submit 
                   </button>
                 }
@@ -165,8 +155,8 @@ export default function ParimutuelJourney() {
     );
 
     const TimelineItem3 = () => (
-        <div className="timeline-item" id="timeline-item-2">
-            <div className="timeline-item-content">
+        <div className="timeline-item-dex" id="timeline-item-2">
+            <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+10 Points"}
                 </span>
@@ -212,8 +202,8 @@ export default function ParimutuelJourney() {
         </div>
     );
     const TimelineItem4 = () => (
-        <div className="timeline-item">
-            <div className="timeline-item-content">
+        <div className="timeline-item-dex">
+            <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+10 Points"}
                 </span>
@@ -257,8 +247,8 @@ export default function ParimutuelJourney() {
         </div>
     );
     const TimelineItem5 = () => (
-        <div className="timeline-item">
-            <div className="timeline-item-content">
+        <div className="timeline-item-dex">
+            <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+20 Points"}
                 </span>
@@ -323,8 +313,8 @@ export default function ParimutuelJourney() {
     );
 
     const TimelineItem6 = () => (
-        <div className="timeline-item">
-            <div className="timeline-item-content">
+        <div className="timeline-item-dex">
+            <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+30 Points"}
                 </span>
@@ -369,8 +359,8 @@ export default function ParimutuelJourney() {
     //         </div>
     //     );
     const ClaimNFT = () => (
-        <div className="timeline-item">
-            <div className="timeline-item-content ">
+        <div className="timeline-item-dex">
+            <div className="timeline-item-dex-content ">
                 <div >
                 <div className='mr-20 '>
                 <h1 className='text-center text-xl font-bold ml-20 pb-3'>Claim your Journey Completion NFT 🎉</h1>
@@ -388,29 +378,34 @@ export default function ParimutuelJourney() {
   return (
    <>
    {/* <Timeline/> */}
-   <div className='bg-emerald-300 h-56 rounded-xl my-5 mx-5 flex items-center grid grid-cols-2'>
+   <div className='bg-pink-300 rounded-xl my-5 mx-5 flex items-center grid grid-cols-2' style={{height:"350px"}}>
     <div>
-    <h1 className='ml-10 text-6xl font-bold mb-3 '>Parimutuel SDK</h1> 
+    <h1 className='ml-10 text-6xl font-bold mb-3 '>Dexterity SDK</h1> 
     
-    <p className='ml-10'>Learn to build a data-retrieval script from dual-outcome <br/>parimutuel markets using Typescript  for custom time frames.</p>
+    <p className='ml-10'>Learn how to connect and use Hxro’s Dexterity Protocol <br/>  </p>
     
     </div>
-    <div className='bg-black rounded-md mr-4'>
+    <div className='bg-black rounded-md mr-4 overflow-auto'>
     <h1 className='ml-10 text-4xl font-bold mb-3 text-white my-2'>Quick Setup</h1> 
     
     <p className='ml-10 text-white my-4'>
-        1. Install <Link className='text-emerald-200 underline' href={'https://nodejs.org/en/download'}>node.js</Link> and <Link className='text-emerald-200 underline'  href={'https://docs.npmjs.com/downloading-and-installing-node-js-and-npm'}>npm</Link>  <br/>
-        2. Create a Typescript project. If you don’t know how, <Link className='text-emerald-200 underline' href={'https://www.digitalocean.com/community/tutorials/typescript-new-project'}>here</Link> is an example  <br/>
-        3. Install Solana Web3.js in your project by running <a className='text-emerald-200'>npm i @solana/web3.js</a> <br/>
-        4. Install the Parimutuel SDK in your project by running <br/> 
-        <p className='ml-4'><a className='text-emerald-200'>npm i @hxronetwork/parimutuelsdk</a></p>
+        1. Previous experience with <Link className='text-pink-200 underline' href={'https://www.youtube.com/watch?v=gp5H0Vw39yw'}>TS </Link><br/>
+        2. Install <Link className='text-pink-200 underline' href={'https://nodejs.org/en/download'}>node.js</Link> and <Link className='text-pink-200 underline'  href={'https://docs.npmjs.com/downloading-and-installing-node-js-and-npm'}>npm</Link>  <br/>
+        3. Create a Typescript project. If you don’t know how, <Link className='text-pink-200 underline' href={'https://www.digitalocean.com/community/tutorials/typescript-new-project'}>here</Link> is an example  <br/>
+        4. Install Solana Web3.js in your project by running <a className='text-pink-200'>npm i @solana/web3.js</a> <br/>
+        5. Install the Dexterity SDK in your project by running <br/> 
+        <p className='ml-4'><a className='text-pink-200'>npm i @hxronetwork/dexterity-ts</a></p>
+        6. Install the Anchor Library in your project by running <br/> 
+        <p className='ml-4'><a className='text-pink-200'>npm i @project-serum/anchor</a></p>
+        7. Install the  base58 encoding library in your project by running <br/> 
+        <p className='ml-4'><a className='text-pink-200'>npm i bs58</a></p>
          
          </p>
     
     </div>
    </div>
    {connected ? (
-   <div className="timeline-container">
+   <div className="timeline-container-dex">
     {/* (if(Progress.P1T1==true)?<TimelineItem1/>:<Locked/>) */}
    <TimelineItem1/>
    <TimelineItem2/> 

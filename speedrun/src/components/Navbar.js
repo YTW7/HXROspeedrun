@@ -10,11 +10,13 @@ import data from '../database/leadData';
 import { useEffect, useState } from 'react';
 import axios from 'axios';
 import { AiFillHome } from 'react-icons/ai';
-
+import ModalUsername from './Modals/ModalUsername';
 
 export default function Navbar() {
   const [leaderboardData, setLeaderboardData] = useState(data);
   const { connected, publicKey } = useWallet()
+  const [showModal, setShowModal] = useState(false);
+
 
   useEffect(() => {
     if (connected) {
@@ -24,6 +26,10 @@ export default function Navbar() {
       const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
       const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
       if (!publicKeyExists) {
+        
+        
+        // <ModalUsername/>
+
         // Create a new object with the publicKey
         const newLeaderboardData = [
           ...leaderboardData,
@@ -80,9 +86,11 @@ export default function Navbar() {
     
       <WalletMultiButton className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
     
-    
+      
     </div>
+    {showModal && <ModalUsername /> && console.log("chalbe")}
   </div>
+     
    </>
   )
 }
