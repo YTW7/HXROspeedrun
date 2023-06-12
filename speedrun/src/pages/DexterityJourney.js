@@ -9,7 +9,8 @@ import Link from 'next/link';
 import { AiFillLock } from 'react-icons/ai';
 import { animateScroll as scroll } from 'react-scroll';
 import React, { useEffect, useState } from 'react';
-
+import Gist from "react-gist";
+import Frame from 'react-frame-component';
 // const fs = require('fs');
 
 export default function ParimutuelJourney() {
@@ -95,7 +96,7 @@ export default function ParimutuelJourney() {
     const TimelineItem1 = () => (
         <div className="timeline-item-dex ">
             <div className="timeline-item-dex-content">
-                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+10 Points"}
                 </span>
                 <time className='text-3xl'>{"Import Dependencies & Setting up an RPC"}</time>
@@ -126,7 +127,7 @@ export default function ParimutuelJourney() {
     const TimelineItem2 = () => (
         <div className="timeline-item-dex" id="timeline-item-2">
             <div className="timeline-item-dex-content">
-                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+20 Points"}
                 </span>
                 <time className='text-3xl'>{"Setting up a Test Wallet"}</time>
@@ -157,43 +158,28 @@ export default function ParimutuelJourney() {
     const TimelineItem3 = () => (
         <div className="timeline-item-dex" id="timeline-item-2">
             <div className="timeline-item-dex-content">
-                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+10 Points"}
                 </span>
-                <time className='text-3xl'>{"Retrieving Contests for a Market"}</time>
+                <time className='text-3xl'>{"Getting the Manifest"}</time>
                 <p>
                 
-                1. To retrieve all of the Contests for the BTCUSD market pair.<br/><br/>
-                To filter for the market pair that we want, use the <b>getMarketPubkeys(config, marketPair)</b> function, and pass in the <b>config</b> object for <b>config</b> and <b>MarketPairEnum.BTCUSD</b> for <b>marketPair</b>.<br/> This will return an array with all the markets for each expiry and their contests for each expiry in the BTCUSD pair.
+                Create an asynchronous function called <b>CreateTRG()</b> in order to connect to Dexterity and obtain the <b>manifest</b>.<br/> This is achieved by using the <b>getManifest(rpc, useCache, wallet)</b> method, passing in 'your rpc' for <b>rpc</b>, a boolean for <b>useCache</b> (for this tutorial,  false is used), and your wallet for <b>wallet</b>.
                 </p>
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
-                const market = sdk.MarketPairEnum.BTCUSD<br/>
-                const markets = sdk.getMarketPubkeys(config, market);
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
+                const CreateTRG = async() ={'> {'}<br/><br/>
+                // get the latest manifest<br/>
+                {'const manifest = await dexterity.getManifest(rpc, false, wallet);'}<br/><br/>
+              {'}'}<br/>
+              CreateTRG()<br/>
                 </code>
                 <p>
-                2. To filter for the expiry interval, use the <b>.filter()</b> method on the <b>markets</b> array, and pass in a callback function that checks if the <b>duration</b> property of each element is equal to the desired expiry time in seconds.<br/> For example, to filter for a 1-minute expiry interval:
+                If the file is ran, you should now see your Manifest object printed out in the console.
                 </p>
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'> 
-                const marketTerm = 60 // The expires are in seconds, so this would be the 1 min
-                <br/><br/>
-                const marketsByTime = markets.filter(
-                      (market) ={'>'} market.duration === marketTerm
-                    );
-                </code>
-
-                <p>
-                3. To retrieve all of the paris contests for the BTCUSD market, use the getParimutuels(*markets, number*) function and pass in the marketsByTime array for *markets*, and the number of contests you want to retrieve for *number*. This function should be called from an asynchronous function:
-                </p>
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'> 
-                {'const Paris = async () => {'}<br/>
-
-                {'const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);'}<br/>
-                {'}'}
-                </code>
 
                 {
                     // <Modal/>
-                    <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    <button onClick={scrollThree} className="btn-modal bg-pink-300 rounded-full font-bold">
                     Submit 
                   </button>
                 }
@@ -204,41 +190,39 @@ export default function ParimutuelJourney() {
     const TimelineItem4 = () => (
         <div className="timeline-item-dex">
             <div className="timeline-item-dex-content">
-                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
+                <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+10 Points"}
                 </span>
-                <time className='text-3xl'>{"Info Zap: Understanding Required Parameters"}</time>
+                <time className='text-3xl'>{"Selecting our MPG"}</time>
                 <p>
-
-                The "parimutuels" variable will give us an array of objects, with each object representing a <b>Contest</b> for the <b>BTCUSD</b> pair in the <b>1 min</b> expiration interval. <br/><br/>
-
-                To better understand what a <b>Contest</b> object looks like, we can retrieve the first element in the array using <b>parimutuels[0]</b> and convert it to a string using <b>JSON.stringify()</b>. Then, we can print the string to the console by calling the <b>Paris()</b> function.
+                This tutorial will focus solely on utilizing the BTC-USD MPG.<br/>
+                In the <b>DexExample()</b> function, it is recommended to establish a constant for the BTC-USD MPG publickey.<br/>
                 </p>
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                {'const Paris = async () => {'}<br/><br/>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                // BTC-USD Market-Product-Group PubKey<br/>
+                const MPG = "DDxNzq3A4qKJxnK2PFYeXE1SgGXCR5baaDBhpfLn3LRS"<br/>
+                const mpgPubkey = new PublicKey(MPG);<br/>
+                </code>
 
-                    const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);<br/><br/>
-                    
-                    console.log(JSON.stringify(parimutuels[0]))<br/>
-                   {' };'}<br/><br/>
-                    
-                    Paris()
+                <p>
+                <b>Creating your TRG</b><br/><br/>
+                To create a TRG for the BTC-USD MPG, use the createTrg(marketProductGroup) from *manifest* and pass in mpgPubkey for <b>marketProductGroup</b>, then you can console.log your result.<br/>
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                //Create our TRG for the BTC-USD MPG <br/>
+                const trgPubkey = await manifest.createTrg(mpgPubkey);<br/>
+                console.log("success! trg pubkey:", trgPubkey.toBase58());<br/>
+                </code>
+                <p>When the file is ran, you should see the following:</p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                success! trg pubkey: CUNNMSSRVFu82wXSjkrdhZFPKwKmAf7uLoxLHDRgVCnN<br/>
                 </code>
                 <p>
-                After calling the <b>Paris()</b> function, you should have printed out a whole lot of data in your console,
-                but we won't be using all of this data yet.<br/><br/> First, we will focus on the info of each Contest
-                <br/><br/>
-                To start, we want to display the following information for each contest:<br/><br/>
-                <b className=' ml-2'>strike:</b> the mark price in USDC at which the contest will exercise<br/>
-                <b className=' ml-2'>slot:</b> the unique identifier number of the contest<br/>
-                <b className=' ml-2'>activeLongPositions:</b> the amount of USDC in the "Long" side of the pool<br/>
-                <b className=' ml-2'>activeShortPositions:</b> the amount of USDC in the "Short" side of the pool<br/>
-                <b className=' ml-2'>expired:</b> a boolean value indicating whether the contest has expired or not<br/><br/>
-                <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
+                Nicely done! You just created your first TRG for the BTC-USD MPG. The following section provides an overview of how to use the TRG trader account to deposit capital into the account, trade products inside of the MPG, cancel positions, and more.
                 </p>
                 {
                     // <Modal/>
-                    <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    <button onClick={scrollFour} className="btn-modal bg-pink-300 rounded-full font-bold">
                     Submit 
                   </button>
                 }
@@ -252,58 +236,74 @@ export default function ParimutuelJourney() {
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(16 185 129)" }}>
                     {"+20 Points"}
                 </span>
-                <time className='text-3xl'>{"Displaying Required Parameters"}</time>
+                <time className='text-3xl'>{"Using TRGs: Depositing into TRGs"}</time>
                 <p>
 
-                To display this information, we can use a <b>forEach</b> loop to iterate through the <b>parimutuels</b> array. <br/>We will assign the variable <b>cont for each object in the array</b> and access the relevant data within the <b>info.parimutuel</b> section of the object.<br/> Then, we will print the information to the console for each contest. Here's how we can do this:
+                Create a new file called <b>fundingTrg.ts</b> where you will build your own function to deposit and withdraw from a TRG.<br/>
+                Copy and paste the code below into your new file:
                 </p>
-                <code className='bg-emerald-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                {'const Paris = async () => {'}<br/><br/>
-                   
-                   const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime, 5);<br/><br/>
-                   
-                     console.log(`\\nMarket Pair: BTCUSD\\nMarket Expiry Interval: 1 min\\n`)<br/><br/>
-                   
-                     const usdcDec = 1_000_000<br/><br/>
-                   
-                   {'parimutuels.forEach((cont) => {'}<br/>
-                       const strike = cont.info.parimutuel.strike.toNumber() / usdcDec;<br/><br/>
-                             const slotId = cont.info.parimutuel.slot.toNumber();<br/><br/>
-                             const longSide = cont.info.parimutuel.activeLongPositions.toNumber() / usdcDec;<br/><br/>
-                             const shortSide = cont.info.parimutuel.activeShortPositions.toNumber() / usdcDec;<br/><br/>
-                             const expired = cont.info.parimutuel.expired<br/><br/>
-                   
-                             console.log(`\\nStrike: $ {'${strike}'}<br/>\\nSlot:{' ${slotId}'}<br/>\\nLongs: $ {'${longSide}'}<br/>\\nShorts: $ {'${shortSide}'}<br/>\\nExprired?: {'${expired?'} 'true' : 'false'{'}'}`)<br/>
-                   {'})'}<br/>
-                   {'};'}<br/><br/>
-                   
-                   Paris()<br/><br/>
-                </code>
-                <p>
-                You should be getting something like this in your console now:
-                </p>
-                <code className='bg-blue-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                Market Pair: BTCUSD<br/>
-                Market Expiry Interval: 1 min<br/><br/>
+                {/* <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-18 py-2'> */}
+                {/* {'import { clusterApiUrl, Keypair, PublicKey } from "@solana/web3.js";'}<br/>
+                {'import { Wallet } from "@project-serum/anchor";'}<br/>
+                import dexterityTs from "@hxronetwork/dexterity-ts";<br/>
+                const dexterity = dexterityTs;<br/>
+                import bs58 from 'bs58'<br/><br/>
                 
-                Strike: $ 1680400.999999<br/>
-                Slot: 1671990780<br/>
-                Longs: $ 249.841564<br/>
-                Shorts: $ 252.0767<br/>
-                Exprired?: true<br/><br/>
-
-                Strike: $ 1680495.75<br/>
-                Slot: 1671990840<br/>
-                Longs: $ 248.210444<br/>
-                Shorts: $ 251.789555<br/>
-                Exprired?: true<br/>
+                // Solana Testnet RPC for connection, which can be used later to get your manifest<br/>
+                const CLUSTER_NAME = "testnet";<br/>
+                const rpc = clusterApiUrl(CLUSTER_NAME);<br/>
+                // or your own RPC URL // const rpc = "https://your-own-rpc.com"<br/><br/>
+                
+                // Setting up our wallet with our Private Key so that we can sign transactions and create our trg account from it<br/>
+                const priv_key = bs58.decode("YOUR-PRIVATE_KEY")<br/>
+                const keypair = Keypair.fromSecretKey(<br/>
+                    priv_key<br/>
+                );<br/><br/>
+                
+                // From the keypair we can pass it to the Wallet() method<br/> to then be able to pass it in getManifest
+                const wallet = new Wallet(keypair);<br/><br/>
+                
+                const fundingTRG = async () ={'> {'}<br/><br/>
+                
+                    // Get the latest manifest<br/>
+                    const manifest = await dexterity.getManifest(rpc, false, wallet);<br/><br/>
+                
+                    // BTC-USD Market-Product-Group PubKey<br/>
+                    const MPG = new PublicKey("DDxNzq3A4qKJxnK2PFYeXE1SgGXCR5baaDBhpfLn3LRS")<br/>
+                    // Our TRG for the BTC-USD MPG <br/>
+                    const trgPubkey = new PublicKey("YOUR-TRG");<br/><br/>
+                
+                    console.log(<br/>
+                        {'`Wallet: ${wallet.publicKey.toBase58()} TRG: ${trgPubkey.toBase58()}`'}<br/>
+                    );<br/>
+                {'}'}<br/><br/>
+                
+                fundingTRG()<br/> */}
+                {/* </code> */}
+                <Gist style={{width:"100%"}} id="414258ad39f35e479b69659deece0370"></Gist>
+                <p>
+                To interact with dexterity and the products inside your MPG using TRG, a trader instance is needed. To create one, use the trader method from dexterity and pass in your trgPubkey and manifest.
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-18 py-2'>
+                const trader = new dexterity.Trader(manifest, trgPubkey);
                 </code>
-                 
+                <p>
+                Next, create a viewAccount() function that allows you to view the cash balance of your TRG account. This will help you to know how much is in the account and enable you to withdraw and deposit funds as needed. This is achieved by using the getNetCash() method from your trader instance:
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-18 py-2'>
+                // View Cash amount in TRG account<br/>
+                 const viewAccount = async() ={'> {'}<br/>
+                     console.log(<br/>
+                       "Net Cash:",<br/>
+                       trader.getNetCash().toString(),<br/>
+                     );<br/>
+                 {'};'}<br/>
+                </code>
                 
 
                 {
                     // <Modal/>
-                    <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                    <button onClick={scrollFive} className="btn-modal bg-pink-300 rounded-full font-bold">
                     Submit 
                   </button>
                 }
