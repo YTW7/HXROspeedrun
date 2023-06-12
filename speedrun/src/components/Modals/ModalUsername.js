@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { AiFillTwitterCircle } from 'react-icons/ai';
 import { ImCross } from 'react-icons/im';
-export default function Modal() {
+export default function ModalUsername() {
   const [modal, setModal] = useState(false);
 
   const toggleModal = () => {

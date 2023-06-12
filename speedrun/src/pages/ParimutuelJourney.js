@@ -8,21 +8,34 @@ import data from 'leadData'
 import Link from 'next/link';
 import { AiFillLock } from 'react-icons/ai';
 import { animateScroll as scroll } from 'react-scroll';
-// import 'react-scroll/dist/react-scroll.css';
+import React, { useEffect, useState } from 'react';
+
+// const fs = require('fs');
 
 export default function ParimutuelJourney() {
+  
+  const { connected, publicKey } = useWallet();
+
+
+  // let foundObj ={
+  //     "rank":6,
+    //     "username":"newuser",
+    //     "publicKey":"8Jeo1JwWhU2K7ivCaVrcd9e8q9bxLfBFXZb82pa21w9y",
+    //     "points":0,
+    //     "step2":false
+    // }
     
-    let foundObj ={
-        "rank":6,
-        "username":"newuser",
-        "publicKey":"8Jeo1JwWhU2K7ivCaVrcd9e8q9bxLfBFXZb82pa21w9y",
-        "points":0,
-        "step2":false
-    }
-    const { connected, publicKey } = useWallet()
-    if(connected){
-    foundObj = data.find(obj => obj.publicKey === publicKey);
-    }
+    // if(connected)
+    // {// if(!exists)
+    // //   {
+    // //     modal popup for entering username
+    // //   }
+    // foundObj = data.find(obj => obj.publicKey === publicKey);
+    // console.log(foundObj.publicKey);
+    // }
+    
+
+
     const Locked = () => (
         <div className="timeline-item">
             <div className="timeline-item-content ">
@@ -38,6 +51,8 @@ export default function ParimutuelJourney() {
             </div>
         </div>
     );
+
+
     const scrollOne = () => {
         scroll.scrollTo(800, {
           duration: 700, // Adjust the duration as needed
@@ -74,6 +89,9 @@ export default function ParimutuelJourney() {
           smooth: 'easeInOutQuart', // Adjust the easing function as needed
         });
       };
+
+
+
     const TimelineItem1 = () => (
         <div className="timeline-item ">
             <div className="timeline-item-content">
@@ -93,15 +111,17 @@ export default function ParimutuelJourney() {
                     
                 </code>
                 {
-                   <button onClick={scrollOne} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                //    <button onClick={scrollOne} className="btn-modal bg-emerald-300 rounded-full font-bold">
                     
-                   Submit
-                 </button>
+                //    Submit
+                //  </button>
+                <Modal/>
                 }
                 <span className="circle" />
             </div>
         </div>
     );
+
     const TimelineItem2 = () => (
         <div className="timeline-item" id="timeline-item-2">
             <div className="timeline-item-content">
@@ -143,6 +163,7 @@ export default function ParimutuelJourney() {
             </div>
         </div>
     );
+
     const TimelineItem3 = () => (
         <div className="timeline-item" id="timeline-item-2">
             <div className="timeline-item-content">
@@ -390,6 +411,7 @@ export default function ParimutuelJourney() {
    </div>
    {connected ? (
    <div className="timeline-container">
+    {/* (if(Progress.P1T1==true)?<TimelineItem1/>:<Locked/>) */}
    <TimelineItem1/>
    <TimelineItem2/> 
    <TimelineItem3/> 
