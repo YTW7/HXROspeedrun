@@ -308,6 +308,19 @@ export default function ParimutuelJourney() {
 
                 await account()<br/>
                 </code>
+                <p>
+                To proceed, you will need Testnet Hxro, UXDC
+                💡 UXDC is an SPL token issued by Hxro Network that is used to test Dexterity Contracts on the Solana Testnet & Devnet<br/><br/>
+                UXDC Faucet: https://uxdc-faucet-api-1srh.vercel.app/<br/><br/>
+                
+                After obtaining UXDC (remember to also have Testnet SOL for transaction fees), create a function to deposit and withdraw UXDC from your TRG<br/><br/>
+
+                To use the deposit and withdraw methods from the trader instance, pass in a Fractional type from your dexterity instance. To create a Fractional, use <b>dexterity.Fractional.New(amount: number, exponent: number)</b><br/><br/>
+
+                The Fractional method from the dexterity instance creates a new fractional value with a specified numerator and denominator. It is used to represent numbers with fractional values, such as decimals or percentages, and allows for precise calculations with those values.
+              </p>
+              <Gist style={{width:"100%"}} id="85e0420d3e7738858604e9e04da5998e"></Gist>
+              
 
                 {
                     // <Modal/>
