@@ -284,22 +284,30 @@ export default function ParimutuelJourney() {
                 <p>
                 To interact with dexterity and the products inside your MPG using TRG, a trader instance is needed. To create one, use the trader method from dexterity and pass in your trgPubkey and manifest.
                 </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-18 py-2'>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
                 const trader = new dexterity.Trader(manifest, trgPubkey);
                 </code>
                 <p>
                 Next, create a viewAccount() function that allows you to view the cash balance of your TRG account. This will help you to know how much is in the account and enable you to withdraw and deposit funds as needed. This is achieved by using the getNetCash() method from your trader instance:
                 </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-18 py-2'>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
                 // View Cash amount in TRG account<br/>
                  const viewAccount = async() ={'> {'}<br/>
-                     console.log(<br/>
-                       "Net Cash:",<br/>
+                     console.log(
+                      "NetCash:",
                        trader.getNetCash().toString(),<br/>
                      );<br/>
                  {'};'}<br/>
                 </code>
-                
+                <p>
+                Next, to obtain updated account information, connect to your trader account. To do this, use the connect method from your trader instance. The connect method allows you to pass in a function as the first argument to get a perpetual update stream, meaning that it will call your function perpetually. Alternatively, you can pass in a function as the second argument to get an account update only once. In this case, you are going to pass in your viewAccount() function to only output your cash balance once when you call the account() function.
+                </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                // Connect to the trader & get updated account cash balance<br/>
+                const account = async() ={'>'} await trader.connect(NaN, viewAccount)<br/><br/>
+
+                await account()<br/>
+                </code>
 
                 {
                     // <Modal/>
@@ -412,8 +420,8 @@ export default function ParimutuelJourney() {
    <TimelineItem3/> 
    <TimelineItem4/> 
    <TimelineItem5/> 
-   <TimelineItem6/>
-   <ClaimNFT/>
+   {/* <TimelineItem6/> */}
+   {/* <ClaimNFT/> */}
    
    {/* {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
    } */}
