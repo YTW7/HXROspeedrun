@@ -2,7 +2,7 @@ import { Schema, models, model } from "mongoose";
 
 const userSchema = new Schema({
     username: String,
-    publicKey: String,
+    pubKey: String,
     points: Number,
     progress: Boolean
 });

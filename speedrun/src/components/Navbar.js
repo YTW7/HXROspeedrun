@@ -24,6 +24,9 @@ const formReducer = (state, event) => {
 
 export default function Navbar() {
      const { connected, publicKey } = useWallet()
+
+     const pkey = connected ? publicKey.toString() : '';
+
      const queryClient = useQueryClient()
     //  const [leaderboardData, setLeaderboardData] = useState(data);
      const [formData, setFormData] = useReducer(formReducer, {})
@@ -40,7 +43,7 @@ export default function Navbar() {
     
       const model = {
           username : generateUsername(),
-          pubKey: publicKey,
+          pubKey: pkey,
           points: 0,
           progress:false
       }
@@ -123,7 +126,7 @@ export default function Navbar() {
     <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
     
       <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
-      {connected? <button onClick={handleSubmit}>Initialize</button>:""}
+      {connected? <button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Save Progress</button>:""}
       
     </div>
     {/* {showModal && <ModalUsername /> && console.log("chalbe")} */}

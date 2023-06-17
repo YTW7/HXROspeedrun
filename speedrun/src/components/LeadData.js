@@ -4,12 +4,12 @@ const inter = Inter({ subsets: ['latin'] })
 import { useEffect } from 'react';
 import { useWallet } from '@solana/wallet-adapter-react';
 import { getAvatarUrl } from "../functions/gravatar"
-import { getUser } from "../../lib/helper";
 import { useQuery } from 'react-query';
+import { getUsers } from '../../lib/helper';
 
 export default function LeadData() {
 
-  const { isLoading, isError, data, error } = useQuery('users', getUser)
+  const { isLoading, isError, data, error } = useQuery('users', getUsers)
   console.log(data);
     if(isLoading) return <div>Employee is Loading...</div>;
     if(isError) return <div>Got Error {error}</div>
@@ -22,7 +22,9 @@ export default function LeadData() {
       <table className="min-w-full table-auto mt-5 rounded-xl">
               <tbody className="bg-gray-200">
               {
-                       data.map((obj, i) => <Tr {...obj} key={i} />)
+                      data.map((obj, i) => <Tr {...obj} key={i} />)
+                      // Object.keys(data).map((key, i) => <Tr {...data[key]} key={i} />)
+                      // Object.values(data).map((value, i) => <Tr {...value} key={i} />)
               }
               </tbody>
         </table>
@@ -30,14 +32,14 @@ export default function LeadData() {
   )
 }
 
-function Tr({username, pubKey, points }){
+function Tr({_id, username, pubKey, points }){
     return(
         <tr className="flex bg-black">
          <div class="flex flex-wrap w-full">
       <div class="p-2 w-full ">
         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
         {/* <h2 class="text-gray-900 title-font font-medium mr-2 text-white">Rank {rank}</h2> */}
-          <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={getAvatarUrl(pubKey)}/>
+          {/* <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={getAvatarUrl(pubKey)}/> */}
           <div class="flex-grow">
             <h2 class="title-font font-medium text-emerald-300">{username}</h2>
             <p class="text-pink-300">{points} Points</p>
