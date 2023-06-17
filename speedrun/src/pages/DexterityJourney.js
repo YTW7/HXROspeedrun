@@ -656,10 +656,10 @@ const TimelineItem9 = () => (
             <div className="timeline-item-dex-content ">
                 <div >
                 <div className='mr-20 '>
-                <h1 className='text-center text-xl font-bold ml-20 pb-3'>Claim your Journey Completion NFT 🎉</h1>
+                <h1 className='text-center text-xl font-bold ml-20 pb-3'>Congrats!<br/>Claim your Journey Completion NFT 🎉</h1>
                 </div>
-                <img  className='rounded-xl' src='/nft.png' width={600}/>
-                <button className="btn-modal bg-emerald-300 rounded-full font-bold">
+                <img  className='rounded-xl' src='/dexterity_nft.png' width={600}/>
+                <button className="btn-modal bg-pink-300 rounded-full font-bold">
                     Claim
                   </button>
                 
@@ -709,7 +709,7 @@ const TimelineItem9 = () => (
    <TimelineItem7/>
    <TimelineItem8/>
    <TimelineItem9/>
-   {/* <ClaimNFT/> */}
+   <ClaimNFT/>
    
    {/* {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
    } */}
