@@ -1,6 +1,5 @@
 [
     {
-        "rank": 1,
         "username": "Toly",
         "publicKey": "1EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
         "points": 700,
@@ -10,31 +9,64 @@
             "P1T3":false,
             "P1T4":false,
             "P1T5":false,
-            "P1T6":false
+            "P1T6":false,
+            "P1T7":false
         }
     },
     {
-        "rank": 2,
         "username": "Dan",
         "publicKey": "2EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 670
+        "points": 670,
+        "progress":{
+            "P1T1":false,
+            "P1T2":false,
+            "P1T3":false,
+            "P1T4":false,
+            "P1T5":false,
+            "P1T6":false,
+            "P1T7":false
+        }
     },
     {
-        "rank": 3,
         "username": "Raj",
         "publicKey": "3EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 500
+        "points": 500,
+        "progress":{
+            "P1T1":false,
+            "P1T2":false,
+            "P1T3":false,
+            "P1T4":false,
+            "P1T5":false,
+            "P1T6":false,
+            "P1T7":false
+        }
     },
     {
-        "rank": 4,
         "username": "Armani",
         "publicKey": "4EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 500
+        "points": 500,
+        "progress":{
+            "P1T1":false,
+            "P1T2":false,
+            "P1T3":false,
+            "P1T4":false,
+            "P1T5":false,
+            "P1T6":false,
+            "P1T7":false
+        }
     },
     {
-        "rank": 5,
         "username": "Thales",
         "publicKey": "5EA3BRi4wVfBS8bTEUd3UHSbfXVCk7CBEWpWSpVhNH6uE",
-        "points": 600
+        "points": 600,
+        "progress":{
+            "P1T1":false,
+            "P1T2":false,
+            "P1T3":false,
+            "P1T4":false,
+            "P1T5":false,
+            "P1T6":false,
+            "P1T7":false
+        }
     }
 ]

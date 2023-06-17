@@ -1,66 +1,104 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
-const inter = Inter({ subsets: ['latin'] })
-import { PublicKey } from '@solana/web3.js';
 import Link from "next/link";
 require('@solana/wallet-adapter-react-ui/styles.css')
 import { useWallet } from '@solana/wallet-adapter-react'
-import data from '../database/leadData';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import data from '../database/leadData';
+import { useEffect, useState, useReducer } from 'react';
 import { AiFillHome } from 'react-icons/ai';
 import ModalUsername from './Modals/ModalUsername';
+import generateUsername from '@/functions/username_generator';
+import Success from './Success';
+import Bug from './Bug';
+
+import { useQueryClient, useMutation } from "react-query"
+import { addUser, getUsers } from "../../lib/helper"
+
+const formReducer = (state, event) => {
+  return {
+      ...state,
+      [event.target.name]: event.target.value
+  }
+}
 
 export default function Navbar() {
-  const [leaderboardData, setLeaderboardData] = useState(data);
-  const { connected, publicKey } = useWallet()
-  const [showModal, setShowModal] = useState(false);
+     const { connected, publicKey } = useWallet()
+     const queryClient = useQueryClient()
+    //  const [leaderboardData, setLeaderboardData] = useState(data);
+     const [formData, setFormData] = useReducer(formReducer, {})
+     const addMutation = useMutation(addUser, {
+     onSuccess : () => {
+                queryClient.prefetchQuery('users', getUsers)
+            }
+        })
+
+    const handleSubmit = (e) => {
+      e.preventDefault();
+      // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
+      let { username, pubKey, points, progress } = formData;
+    
+      const model = {
+          username : generateUsername(),
+          pubKey: publicKey,
+          points: 0,
+          progress:false
+      }
+
+        addMutation.mutate(model)
+      }
+
+      if(addMutation.isLoading) return <div>Loading!</div>
+      if(addMutation.isError) return <Bug message={addMutation.error.message}></Bug>
+      if(addMutation.isSuccess) return <Success message={"Added Successfully"}></Success>
+  
+  
+  // const [showModal, setShowModal] = useState(false);
 
 
-  useEffect(() => {
-    if (connected) {
-      const newPublicKey = publicKey.toString();
+  // useEffect(() => {
+  //   if (connected) {
+  //     const newPublicKey = publicKey.toString();
 
-      // Check if the publicKey already exists in the data
-      const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
-      const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
-      if (!publicKeyExists) {
+  //     // Check if the publicKey already exists in the data
+  //     const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
+  //     const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
+  //     if (!publicKeyExists) {
         
         
-        // <ModalUsername/>
+  //       // <ModalUsername/>
 
-        // Create a new object with the publicKey
-        const newLeaderboardData = [
-          ...leaderboardData,
-          {
-           rank: maxValue+1,
-            username: "newuser",
-            publicKey: newPublicKey,
-            points:0,
-            step2: false
-          }
-        ];
+  //       // Create a new object with the publicKey
+  //       const newLeaderboardData = [
+  //         ...leaderboardData,
+  //         {
+  //          rank: maxValue+1,
+  //           username: "newuser",
+  //           publicKey: newPublicKey,
+  //           points:0,
+  //           step2: false
+  //         }
+  //       ];
 
         // Save the updated JSON data to storage or update the state as required
-        const updateData = async () => {
-          try {
-            await axios.post('/api/updateData', { newLeaderboardData });
-            console.log('data.json updated successfully');
-          } catch (error) {
-            console.error('Error updating data.json:', error);
-          }
-        };
+  //       const updateData = async () => {
+  //         try {
+  //           await axios.post('/api/updateData', { newLeaderboardData });
+  //           console.log('data.json updated successfully');
+  //         } catch (error) {
+  //           console.error('Error updating data.json:', error);
+  //         }
+  //       };
 
-        updateData();
+  //       updateData();
 
-        // Update the leaderboard data
-        setLeaderboardData(newLeaderboardData);
+  //       // Update the leaderboard data
+  //       setLeaderboardData(newLeaderboardData);
 
         
-      }
-    }
-  }, [connected, publicKey]);
+  //     }
+  //   }
+  // }, [connected, publicKey]);
 
 
   return (
@@ -84,11 +122,11 @@ export default function Navbar() {
     </a>
     <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
     
-      <WalletMultiButton className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
-    
+      <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
+      {connected? <button onClick={handleSubmit}>Initialize</button>:""}
       
     </div>
-    {showModal && <ModalUsername /> && console.log("chalbe")}
+    {/* {showModal && <ModalUsername /> && console.log("chalbe")} */}
   </div>
      
    </>
