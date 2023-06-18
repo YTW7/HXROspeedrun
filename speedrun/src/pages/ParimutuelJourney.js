@@ -34,6 +34,7 @@ export default function ParimutuelJourney() {
   let p1t5Data = null;
   let p1t6Data = null;
   let p1t7Data = null;
+  let p1NFTData = null;
   let formId = null;
   const pkey = connected ? publicKey.toString() : '';
 
@@ -46,26 +47,12 @@ for (let i = 0; i < data.length; i++) {
     p1t5Data = data[i].P1T5;
     p1t6Data = data[i].P1T6;
     p1t7Data = data[i].P1T7;
+    p1NFTData = data[i].P1NFT;
     formId = data[i]._id;
     break;
   }
 }
-  // let foundObj ={
-  //     "rank":6,
-    //     "username":"newuser",
-    //     "publicKey":"8Jeo1JwWhU2K7ivCaVrcd9e8q9bxLfBFXZb82pa21w9y",
-    //     "points":0,
-    //     "step2":false
-    // }
-    
-    // if(connected)
-    // {// if(!exists)
-    // //   {
-    // //     modal popup for entering username
-    // //   }
-    // foundObj = data.find(obj => obj.publicKey === publicKey);
-    // console.log(foundObj.publicKey);
-    // }
+  
     
 
     const LockedOne = () => (
@@ -423,12 +410,15 @@ for (let i = 0; i < data.length; i++) {
             <div className="timeline-item-content ">
                 <div >
                 <div className='mr-20 '>
-                <h1 className='text-center text-xl font-bold ml-20 pb-3'>Claim your Journey Completion NFT 🎉</h1>
+                <h1 className='text-center text-xl font-bold ml-20 pb-3'>Congratulations!<br/>Claim your Journey Completion NFT 🎉</h1>
                 </div>
-                <img  className='rounded-xl' src='/nft.png' width={600}/>
-                <button className="btn-modal bg-emerald-300 rounded-full font-bold">
+                <img  className='rounded-xl py-5' src='/nft.png' width={600}/>
+                {
+                    // p1NFTData?'':<ModalNFT/>
+                    <button className="btn-modal bg-emerald-300 rounded-full font-bold">
                     Claim
                   </button>
+                }
                 
                 </div>
                 <span className="circle" />

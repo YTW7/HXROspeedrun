@@ -7,7 +7,7 @@ import { useWallet } from '@solana/wallet-adapter-react'
 // import data from '../database/leadData';
 import { useEffect, useState, useReducer } from 'react';
 import { AiFillHome } from 'react-icons/ai';
-import ModalUsername from './Modals/ModalUsername';
+import UserProfileModal from './Modals/UserProfileModal';
 import generateUsername from '@/functions/username_generator';
 import Success from './Success';
 import Bug from './Bug';
@@ -32,6 +32,7 @@ const formReducer = (state, event) => {
 export default function Navbar() {
      const { isLoading, isError, data, error } = useQuery('users', getUsers)
      const { connected, publicKey } = useWallet()
+     const [profileModal, setProfileModal]=useState(false);
 
      const pkey = connected ? publicKey.toString() : '';
     //  console.log(data);
@@ -40,6 +41,7 @@ export default function Navbar() {
 
      const desiredObject = data?.find(obj => obj.pubKey === pkey);
      const avatarUrl=desiredObject?.avatar;
+     const formId=desiredObject?._id;
     //  console.log(publicKeyExists);
      
     //  console.log(publicKeyExists);
@@ -56,7 +58,7 @@ export default function Navbar() {
         })
 
     const handleSubmit = (e) => {
-      e.preventDefault();
+      // e.preventDefault();
       // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
       let { username, pubKey, avatar, points, progress } = formData;
     
@@ -71,12 +73,20 @@ export default function Navbar() {
           P1T4:false,
           P1T5:false,
           P1T6:false,
-          P1T7:false
-          
+          P1T7:false,
+          P1NFT:false   
       }
 
         addMutation.mutate(model)
       }
+//&& !publicKeyExists
+      useEffect(() => {
+        if (connected ) {
+          if(publicKeyExists===false){
+          handleSubmit();
+          }
+        }
+      }, [connected, publicKeyExists]);
 
       if(addMutation.isLoading) return <div>Loading!</div>
       if(addMutation.isError) return <Bug message={addMutation.error.message}></Bug>
@@ -158,11 +168,12 @@ export default function Navbar() {
     
       <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
       {/* <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl}/> */}
-      {connected? publicKeyExists ? <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl}/>:'':''}
-      {/* {connected? <button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Save Progress</button>:""} */}
-      {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Create Profile</button>:''}
+      {connected? publicKeyExists ? <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl} onClick={()=>setProfileModal(!profileModal)}/>:'':''}
+      
+      {/* {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Create Profile</button>:''} */}
     </div>
     {suc && <SuccessModal message={"Profile Created Successfully"}/>}
+    {profileModal && <UserProfileModal formId={formId}/>}
     {/* {showModal && <ModalUsername /> && console.log("chalbe")} */}
   </div>
      

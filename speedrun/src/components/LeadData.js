@@ -14,7 +14,7 @@ export default function LeadData() {
     if(isLoading) return <div>Data is Loading...</div>;
     if(isError) return <div>Got Error {error}</div>
 
-  // const sortedData = [...data].sort((a, b) => b.points - a.points);
+  const sortedData = [...data].sort((a, b) => b.points - a.points);
   // const updatedData = sortedData.map((obj, index) => ({ ...obj, rank: index + 1 }));
 
   // function publicKeyExists(pubKey) {
@@ -39,7 +39,7 @@ export default function LeadData() {
       <table className="min-w-full table-auto mt-5 rounded-xl">
               <tbody className="bg-gray-200">
               {
-                      data.map((obj, i) => <Tr {...obj} key={i} />)
+                      sortedData.map((obj, i) => <Tr {...obj} key={i} />)
                       // Object.keys(data).map((key, i) => <Tr {...data[key]} key={i} />)
                       // Object.values(data).map((value, i) => <Tr {...value} key={i} />)
               }
