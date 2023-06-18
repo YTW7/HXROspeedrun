@@ -6,9 +6,11 @@ import LeadData from '@/components/LeadData'
 export default function Leaderboard() {
   return (
    <>
+   <div className='container mx-auto'>
    <h1 className='text-white text-6xl font-bold ml-5 mb-4'>Leaderboard</h1>
    <hr/>
    <LeadData/>
+   </div>
    </>
   )
 }

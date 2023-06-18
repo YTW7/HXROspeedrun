@@ -1,66 +1,148 @@
 import Image from 'next/image'
 import { Inter } from 'next/font/google'
 import { WalletMultiButton } from '@solana/wallet-adapter-react-ui'
-const inter = Inter({ subsets: ['latin'] })
-import { PublicKey } from '@solana/web3.js';
 import Link from "next/link";
 require('@solana/wallet-adapter-react-ui/styles.css')
 import { useWallet } from '@solana/wallet-adapter-react'
-import data from '../database/leadData';
-import { useEffect, useState } from 'react';
-import axios from 'axios';
+// import data from '../database/leadData';
+import { useEffect, useState, useReducer } from 'react';
 import { AiFillHome } from 'react-icons/ai';
-import ModalUsername from './Modals/ModalUsername';
+import UserProfileModal from './Modals/UserProfileModal';
+import generateUsername from '@/functions/username_generator';
+import Success from './Success';
+import Bug from './Bug';
+import { useQuery } from 'react-query';
+import { addUser, getUsers } from '../../lib/helper';
+
+import { useQueryClient, useMutation } from "react-query"
+import CheckWallet from './CheckWallet';
+import SuccessModal from './Modals/SuccessModal';
+import { getAvatarUrl } from '@/functions/gravatar';
+// import { getUsers } from "../../lib/helper"
+
+const formReducer = (state, event) => {
+  return {
+      ...state,
+      [event.target.name]: event.target.value
+  }
+}
+
+
 
 export default function Navbar() {
-  const [leaderboardData, setLeaderboardData] = useState(data);
-  const { connected, publicKey } = useWallet()
-  const [showModal, setShowModal] = useState(false);
+     const { isLoading, isError, data, error } = useQuery('users', getUsers)
+     const { connected, publicKey } = useWallet()
+     const [profileModal, setProfileModal]=useState(false);
 
+     const pkey = connected ? publicKey.toString() : '';
+    //  console.log(data);
+    //  console.log(CheckWallet);
+     const publicKeyExists = data?.some(obj => Object.keys(obj)?.some(key => obj[key] === pkey));
 
-  useEffect(() => {
-    if (connected) {
-      const newPublicKey = publicKey.toString();
+     const desiredObject = data?.find(obj => obj.pubKey === pkey);
+     const avatarUrl=desiredObject?.avatar;
+     const formId=desiredObject?._id;
+    //  console.log(publicKeyExists);
+     
+    //  console.log(publicKeyExists);
+     
+     
 
-      // Check if the publicKey already exists in the data
-      const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
-      const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
-      if (!publicKeyExists) {
-        
-        
-        // <ModalUsername/>
+     const queryClient = useQueryClient()
+    //  const [leaderboardData, setLeaderboardData] = useState(data);
+     const [formData, setFormData] = useReducer(formReducer, {})
+     const addMutation = useMutation(addUser, {
+     onSuccess : () => {
+                queryClient.prefetchQuery('users', getUsers)
+            }
+        })
 
-        // Create a new object with the publicKey
-        const newLeaderboardData = [
-          ...leaderboardData,
-          {
-           rank: maxValue+1,
-            username: "newuser",
-            publicKey: newPublicKey,
-            points:0,
-            step2: false
+    const handleSubmit = (e) => {
+      // e.preventDefault();
+      // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
+      let { username, pubKey, avatar, points, progress } = formData;
+    
+      const model = {
+          username : generateUsername(),
+          pubKey: pkey,
+          points: 0,
+          avatar: getAvatarUrl(pkey),
+          P1T1:true,
+          P1T2:false,
+          P1T3:false,
+          P1T4:false,
+          P1T5:false,
+          P1T6:false,
+          P1T7:false,
+          P1NFT:false   
+      }
+
+        addMutation.mutate(model)
+      }
+//&& !publicKeyExists
+      useEffect(() => {
+        if (connected ) {
+          if(publicKeyExists===false){
+          handleSubmit();
           }
-        ];
+        }
+      }, [connected, publicKeyExists]);
+
+      if(addMutation.isLoading) return <div>Loading!</div>
+      if(addMutation.isError) return <Bug message={addMutation.error.message}></Bug>
+      // if(addMutation.isSuccess) return console.log('Added Successfully');
+      // if(addMutation.isSuccess) return <Success message={"Added Successfully"}></Success>
+      // if(addMutation.isSuccess) return <SuccessModal message={"Added Successfully"}/>
+      let suc=false;
+      if(addMutation.isSuccess) {suc=true;}
+  
+  
+  // const [showModal, setShowModal] = useState(false);
+
+
+  // useEffect(() => {
+  //   if (connected) {
+  //     const newPublicKey = publicKey.toString();
+
+  //     // Check if the publicKey already exists in the data
+  //     const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
+  //     const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
+  //     if (!publicKeyExists) {
+        
+        
+  //       // <ModalUsername/>
+
+  //       // Create a new object with the publicKey
+  //       const newLeaderboardData = [
+  //         ...leaderboardData,
+  //         {
+  //          rank: maxValue+1,
+  //           username: "newuser",
+  //           publicKey: newPublicKey,
+  //           points:0,
+  //           step2: false
+  //         }
+  //       ];
 
         // Save the updated JSON data to storage or update the state as required
-        const updateData = async () => {
-          try {
-            await axios.post('/api/updateData', { newLeaderboardData });
-            console.log('data.json updated successfully');
-          } catch (error) {
-            console.error('Error updating data.json:', error);
-          }
-        };
+  //       const updateData = async () => {
+  //         try {
+  //           await axios.post('/api/updateData', { newLeaderboardData });
+  //           console.log('data.json updated successfully');
+  //         } catch (error) {
+  //           console.error('Error updating data.json:', error);
+  //         }
+  //       };
 
-        updateData();
+  //       updateData();
 
-        // Update the leaderboard data
-        setLeaderboardData(newLeaderboardData);
+  //       // Update the leaderboard data
+  //       setLeaderboardData(newLeaderboardData);
 
         
-      }
-    }
-  }, [connected, publicKey]);
+  //     }
+  //   }
+  // }, [connected, publicKey]);
 
 
   return (
@@ -84,11 +166,15 @@ export default function Navbar() {
     </a>
     <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
     
-      <WalletMultiButton className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
-    
+      <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
+      {/* <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl}/> */}
+      {connected? publicKeyExists ? <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl} onClick={()=>setProfileModal(!profileModal)}/>:'':''}
       
+      {/* {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Create Profile</button>:''} */}
     </div>
-    {showModal && <ModalUsername /> && console.log("chalbe")}
+    {suc && <SuccessModal message={"Profile Created Successfully"}/>}
+    {profileModal && <UserProfileModal formId={formId}/>}
+    {/* {showModal && <ModalUsername /> && console.log("chalbe")} */}
   </div>
      
    </>

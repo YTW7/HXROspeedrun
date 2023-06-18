@@ -1,6 +1,5 @@
 
 
-
 import React, { useState } from "react";
 import { AiFillTwitterCircle } from 'react-icons/ai';
 import { ImCross } from 'react-icons/im';
@@ -10,7 +9,7 @@ import { useWallet } from '@solana/wallet-adapter-react';
 
 
 
-export default function ModalNFT(props) {
+export default function ModalP1T5(props) {
   const [modal, setModal] = useState(false);
 
     const queryClient = useQueryClient()
@@ -26,13 +25,13 @@ export default function ModalNFT(props) {
    if(isLoading) return <div>Loading...!</div>
    if(isError) return <div>Error</div>
 
-   const { username, pubKey, points, P1T1, P1T2, P1T3, P1T4, P1T5, P1T6, P1T7, P1NFT } = data;
+   const { username, pubKey, points, P1T1, P1T2, P1T3, P1T4, P1T5, P1T6, P1T7 } = data;
   //  const [firstname, lastname] = name ? name.split(' ') : formData
 
    const handleSubmit = async (e) => {
     e.preventDefault();
     // let userName = `${formData.firstname ?? firstname} ${formData.lastname ?? lastname}`;
-    let updated = Object.assign({}, data,{points: (points + 0)}, { P1NFT: true })
+    let updated = Object.assign({}, data, {points: (points + 20)}, { P1T6: true})
     await UpdateMutation.mutate(updated)
 }
 

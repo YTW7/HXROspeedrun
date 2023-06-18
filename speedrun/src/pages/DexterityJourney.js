@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 import timelineData from '../database/timeline'
-import Modal from '../components/Modals/ModalOne';
+import Modal from '../components/Modals/ModalP1T1';
 import ModalNFT from '../components/Modals/ModalNFT';
 import { useWallet } from '@solana/wallet-adapter-react';
 import data from 'leadData'
