@@ -38,7 +38,7 @@ export default function ParimutuelJourney() {
   let formId = null;
   const pkey = connected ? publicKey.toString() : '';
 
-for (let i = 0; i < data.length; i++) {
+for (let i = 0; i < data?.length; i++) {
   if (data[i].pubKey === pkey) {
     p1t1Data = data[i].P1T1;
     p1t2Data = data[i].P1T2;
