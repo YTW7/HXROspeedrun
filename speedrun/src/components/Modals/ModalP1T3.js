@@ -22,8 +22,8 @@ export default function ModalP1T3(props) {
         }
     })
 
-   if(isLoading) return <div>Loading...!</div>
-   if(isError) return <div>Error</div>
+    if(isLoading) return console.log('Loading...!');
+    if(isError) return console.log('Error');
 
    const { username, pubKey, points, P1T1, P1T2, P1T3, P1T4, P1T5, P1T6, P1T7, P1NFT } = data ; 
   //  const [firstname, lastname] = name ? name.split(' ') : formData
