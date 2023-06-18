@@ -20,12 +20,12 @@ import SuccessModal from './Modals/SuccessModal';
 import { getAvatarUrl } from '@/functions/gravatar';
 // import { getUsers } from "../../lib/helper"
 
-const formReducer = (state, event) => {
-  return {
-      ...state,
-      [event.target.name]: event.target.value
-  }
-}
+// const formReducer = (state, event) => {
+//   return {
+//       ...state,
+//       [event.target.name]: event.target.value
+//   }
+// }
 
 
 
@@ -50,7 +50,7 @@ export default function Navbar() {
 
      const queryClient = useQueryClient()
     //  const [leaderboardData, setLeaderboardData] = useState(data);
-     const [formData, setFormData] = useReducer(formReducer, {})
+    //  const [formData, setFormData] = useReducer(formReducer, {})
      const addMutation = useMutation(addUser, {
      onSuccess : () => {
                 queryClient.prefetchQuery('users', getUsers)
@@ -60,7 +60,7 @@ export default function Navbar() {
     const handleSubmit = (e) => {
       // e.preventDefault();
       // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
-      let { username, pubKey, avatar, points, progress } = formData;
+      // let { username, pubKey, avatar, points, progress } = formData;
     
       const model = {
           username : generateUsername(),
