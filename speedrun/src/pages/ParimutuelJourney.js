@@ -1,7 +1,7 @@
 import { Inter } from 'next/font/google'
 const inter = Inter({ subsets: ['latin'] })
 import timelineData from '../database/timeline'
-import Modal from '../components/Modals/ModalOne';
+import Modal from '../components/Modals/ModalP1T1';
 import ModalNFT from '../components/Modals/ModalNFT';
 import { useWallet } from '@solana/wallet-adapter-react';
 import data from 'leadData'
@@ -9,14 +9,47 @@ import Link from 'next/link';
 import { AiFillLock } from 'react-icons/ai';
 import { animateScroll as scroll } from 'react-scroll';
 import React, { useEffect, useState } from 'react';
+import { useQuery } from 'react-query';
+import { getUsers } from '../../lib/helper';
+import ModalP1T1 from '../components/Modals/ModalP1T1';
+import ModalP1T2 from '@/components/Modals/ModalP1T2';
+import ModalP1T3 from '@/components/Modals/ModalP1T3';
+import ModalP1T4 from '@/components/Modals/ModalP1T4';
+import ModalP1T5 from '@/components/Modals/ModalP1T5';
+import ModalP1T6 from '@/components/Modals/ModalP1T6';
 
 // const fs = require('fs');
 
 export default function ParimutuelJourney() {
   
   const { connected, publicKey } = useWallet();
+  const { isLoading, isError, data, error } = useQuery('users', getUsers)
+  if(isLoading) return <div>Data is Loading...</div>;
+  if(isError) return <div>Got Error {error}</div>
 
+  let p1t1Data = null;
+  let p1t2Data = null;
+  let p1t3Data = null;
+  let p1t4Data = null;
+  let p1t5Data = null;
+  let p1t6Data = null;
+  let p1t7Data = null;
+  let formId = null;
+  const pkey = connected ? publicKey.toString() : '';
 
+for (let i = 0; i < data.length; i++) {
+  if (data[i].pubKey === pkey) {
+    p1t1Data = data[i].P1T1;
+    p1t2Data = data[i].P1T2;
+    p1t3Data = data[i].P1T3;
+    p1t4Data = data[i].P1T4;
+    p1t5Data = data[i].P1T5;
+    p1t6Data = data[i].P1T6;
+    p1t7Data = data[i].P1T7;
+    formId = data[i]._id;
+    break;
+  }
+}
   // let foundObj ={
   //     "rank":6,
     //     "username":"newuser",
@@ -115,7 +148,7 @@ export default function ParimutuelJourney() {
                     
                 //    Submit
                 //  </button>
-                <Modal/>
+                <ModalP1T1 formId={formId}/>
                 }
                 <span className="circle" />
             </div>
@@ -155,9 +188,10 @@ export default function ParimutuelJourney() {
                 </ul>
                 </p>
                 {
-                    <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
-                    Submit 
-                  </button>
+                  //   <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                  //   Submit 
+                  // </button>
+                  <ModalP1T2 formId={formId}/>
                 }
                 <span className="circle" />
             </div>
@@ -202,10 +236,10 @@ export default function ParimutuelJourney() {
                 </code>
 
                 {
-                    // <Modal/>
-                    <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
-                    Submit 
-                  </button>
+                  <ModalP1T3 formId={formId}/>
+                  //   <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                  //   Submit 
+                  // </button>
                 }
                 <span className="circle" />
             </div>
@@ -247,10 +281,10 @@ export default function ParimutuelJourney() {
                 <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
                 </p>
                 {
-                    // <Modal/>
-                    <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
-                    Submit 
-                  </button>
+                    <ModalP1T4 formId={formId}/>
+                  //   <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                  //   Submit 
+                  // </button>
                 }
                 <span className="circle" />
             </div>
@@ -312,10 +346,10 @@ export default function ParimutuelJourney() {
                 
 
                 {
-                    // <Modal/>
-                    <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
-                    Submit 
-                  </button>
+                    <ModalP1T5 formId={formId}/>
+                  //   <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                  //   Submit 
+                  // </button>
                 }
                 <span className="circle" />
             </div>
@@ -350,10 +384,10 @@ export default function ParimutuelJourney() {
                 </p>
 
                 {
-                    // <ModalNFT/>
-                    <button onClick={scrollSix} className="btn-modal bg-emerald-300 rounded-full font-bold">
-                    Submit 
-                  </button>
+                    <ModalP1T6 formId={formId}/>
+                  //   <button onClick={scrollSix} className="btn-modal bg-emerald-300 rounded-full font-bold">
+                  //   Submit 
+                  // </button>
                 }
                 <span className="circle" />
             </div>
@@ -412,13 +446,13 @@ export default function ParimutuelJourney() {
    {connected ? (
    <div className="timeline-container">
     {/* (if(Progress.P1T1==true)?<TimelineItem1/>:<Locked/>) */}
-   <TimelineItem1/>
-   <TimelineItem2/> 
-   <TimelineItem3/> 
-   <TimelineItem4/> 
-   <TimelineItem5/> 
-   <TimelineItem6/>
-   <ClaimNFT/>
+   {p1t1Data ? <TimelineItem1/> : <Locked/>}
+   {p1t2Data ? <TimelineItem2/> : <Locked/>}
+   {p1t3Data ? <TimelineItem3/> : <Locked/>}
+   {p1t4Data ? <TimelineItem4/> : <Locked/>}
+   {p1t5Data ? <TimelineItem5/> : <Locked/>}
+   {p1t6Data ? <TimelineItem6/> : <Locked/>}
+   {p1t7Data ? <ClaimNFT/> : <Locked/>}
    
    {/* {foundObj && foundObj.step2 ?<TimelineItem2/> : <Locked/>
    } */}

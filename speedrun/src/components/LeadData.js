@@ -10,12 +10,29 @@ import { getUsers } from '../../lib/helper';
 export default function LeadData() {
 
   const { isLoading, isError, data, error } = useQuery('users', getUsers)
-  console.log(data);
-    if(isLoading) return <div>Employee is Loading...</div>;
+  // console.log(data);
+    if(isLoading) return <div>Data is Loading...</div>;
     if(isError) return <div>Got Error {error}</div>
 
   // const sortedData = [...data].sort((a, b) => b.points - a.points);
   // const updatedData = sortedData.map((obj, index) => ({ ...obj, rank: index + 1 }));
+
+  // function publicKeyExists(pubKey) {
+  //   let flag=0;
+  //   for (let i = 0; i < data.length; i++) {
+  //     // console.log(data[i].pubKey);
+  //     if (pubKey==data[i].pubKey) {
+  //       let flag=1;
+  //     }
+  //   }
+  //   if(flag==1) return true;
+  //   return false;
+  // }
+  // console.log(publicKeyExists("6yS5QcX9oMmmyG5x5gAJ2zjS2spTBtoUsnvEBAov6zAN")); 
+  // const pubKey="6yS5QcX9oMmmyG5x5gAJ2zjS2spTBtoUsnvEBAov6zAN"
+  // const publicKeyExists = data.some(obj => Object.keys(obj).some(key => obj[key] === pubKey));
+  // console.log(publicKeyExists); 
+
   
   return (
    <>

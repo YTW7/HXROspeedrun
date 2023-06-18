@@ -33,7 +33,7 @@ export async function postUser(req, res){
     try {
         const formData = req.body;
         if(!formData) return res.status(404).json( { error: "Form Data Not Provided...!"});
-        Users.create( formData ).then((res) => {
+        Users.create( formData ).then((data) => {
             res.status(200).json(data)
           })
           .catch((error) => {
