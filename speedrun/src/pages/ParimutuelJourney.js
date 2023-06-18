@@ -24,8 +24,8 @@ export default function ParimutuelJourney() {
   
   const { connected, publicKey } = useWallet();
   const { isLoading, isError, data, error } = useQuery('users', getUsers)
-  if(isLoading) return <div>Data is Loading...</div>;
-  if(isError) return <div>Got Error {error}</div>
+  // if(isLoading) return <div>Data is Loading...</div>;
+  // if(isError) return <div>Got Error {error}</div>
 
   let p1t1Data = null;
   let p1t2Data = null;
