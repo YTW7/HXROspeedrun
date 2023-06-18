@@ -16,6 +16,7 @@ import { addUser, getUsers } from '../../lib/helper';
 
 import { useQueryClient, useMutation } from "react-query"
 import CheckWallet from './CheckWallet';
+import SuccessModal from './Modals/SuccessModal';
 // import { getUsers } from "../../lib/helper"
 
 const formReducer = (state, event) => {
@@ -57,7 +58,7 @@ export default function Navbar() {
           username : generateUsername(),
           pubKey: pkey,
           points: 0,
-          P1T1:false,
+          P1T1:true,
           P1T2:false,
           P1T3:false,
           P1T4:false,
@@ -72,7 +73,11 @@ export default function Navbar() {
 
       if(addMutation.isLoading) return <div>Loading!</div>
       if(addMutation.isError) return <Bug message={addMutation.error.message}></Bug>
-      if(addMutation.isSuccess) return <Success message={"Added Successfully"}></Success>
+      // if(addMutation.isSuccess) return console.log('Added Successfully');
+      // if(addMutation.isSuccess) return <Success message={"Added Successfully"}></Success>
+      // if(addMutation.isSuccess) return <SuccessModal message={"Added Successfully"}/>
+      let suc=false;
+      if(addMutation.isSuccess) {suc=true;}
   
   
   // const [showModal, setShowModal] = useState(false);
@@ -146,8 +151,9 @@ export default function Navbar() {
     
       <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
       {/* {connected? <button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Save Progress</button>:""} */}
-      {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Save Progress</button>:''}
+      {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Create Profile</button>:''}
     </div>
+    {suc && <SuccessModal message={"Profile Created Successfully"}/>}
     {/* {showModal && <ModalUsername /> && console.log("chalbe")} */}
   </div>
      
