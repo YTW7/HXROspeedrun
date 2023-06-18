@@ -20,12 +20,12 @@ import SuccessModal from './Modals/SuccessModal';
 import { getAvatarUrl } from '@/functions/gravatar';
 // import { getUsers } from "../../lib/helper"
 
-// const formReducer = (state, event) => {
-//   return {
-//       ...state,
-//       [event.target.name]: event.target.value
-//   }
-// }
+const formReducer = (state, event) => {
+  return {
+      ...state,
+      [event.target.name]: event.target.value
+  }
+}
 
 
 
@@ -50,7 +50,7 @@ export default function Navbar() {
 
      const queryClient = useQueryClient()
     //  const [leaderboardData, setLeaderboardData] = useState(data);
-    //  const [formData, setFormData] = useReducer(formReducer, {})
+     const [formData, setFormData] = useReducer(formReducer, {})
      const addMutation = useMutation(addUser, {
      onSuccess : () => {
                 queryClient.prefetchQuery('users', getUsers)
@@ -60,7 +60,7 @@ export default function Navbar() {
     const handleSubmit = (e) => {
       // e.preventDefault();
       // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
-      // let { username, pubKey, avatar, points, progress } = formData;
+      let { username, pubKey, avatar, points } = formData;
     
       const model = {
           username : generateUsername(),
@@ -96,53 +96,6 @@ export default function Navbar() {
       let suc=false;
       if(addMutation.isSuccess) {suc=true;}
   
-  
-  // const [showModal, setShowModal] = useState(false);
-
-
-  // useEffect(() => {
-  //   if (connected) {
-  //     const newPublicKey = publicKey.toString();
-
-  //     // Check if the publicKey already exists in the data
-  //     const publicKeyExists = leaderboardData.some(obj => obj.publicKey === newPublicKey);
-  //     const maxValue = leaderboardData.reduce((max, obj) => (obj.rank > max ? obj.rank : max), -Infinity);
-  //     if (!publicKeyExists) {
-        
-        
-  //       // <ModalUsername/>
-
-  //       // Create a new object with the publicKey
-  //       const newLeaderboardData = [
-  //         ...leaderboardData,
-  //         {
-  //          rank: maxValue+1,
-  //           username: "newuser",
-  //           publicKey: newPublicKey,
-  //           points:0,
-  //           step2: false
-  //         }
-  //       ];
-
-        // Save the updated JSON data to storage or update the state as required
-  //       const updateData = async () => {
-  //         try {
-  //           await axios.post('/api/updateData', { newLeaderboardData });
-  //           console.log('data.json updated successfully');
-  //         } catch (error) {
-  //           console.error('Error updating data.json:', error);
-  //         }
-  //       };
-
-  //       updateData();
-
-  //       // Update the leaderboard data
-  //       setLeaderboardData(newLeaderboardData);
-
-        
-  //     }
-  //   }
-  // }, [connected, publicKey]);
 
 
   return (
@@ -174,7 +127,6 @@ export default function Navbar() {
     </div>
     {suc && <SuccessModal message={"Profile Created Successfully"}/>}
     {profileModal && <UserProfileModal formId={formId}/>}
-    {/* {showModal && <ModalUsername /> && console.log("chalbe")} */}
   </div>
      
    </>
