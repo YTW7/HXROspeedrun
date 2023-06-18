@@ -17,6 +17,7 @@ import { addUser, getUsers } from '../../lib/helper';
 import { useQueryClient, useMutation } from "react-query"
 import CheckWallet from './CheckWallet';
 import SuccessModal from './Modals/SuccessModal';
+import { getAvatarUrl } from '@/functions/gravatar';
 // import { getUsers } from "../../lib/helper"
 
 const formReducer = (state, event) => {
@@ -26,6 +27,8 @@ const formReducer = (state, event) => {
   }
 }
 
+
+
 export default function Navbar() {
      const { isLoading, isError, data, error } = useQuery('users', getUsers)
      const { connected, publicKey } = useWallet()
@@ -34,6 +37,9 @@ export default function Navbar() {
     //  console.log(data);
     //  console.log(CheckWallet);
      const publicKeyExists = data?.some(obj => Object.keys(obj)?.some(key => obj[key] === pkey));
+
+     const desiredObject = data?.find(obj => obj.pubKey === pkey);
+     const avatarUrl=desiredObject?.avatar;
     //  console.log(publicKeyExists);
      
     //  console.log(publicKeyExists);
@@ -52,12 +58,13 @@ export default function Navbar() {
     const handleSubmit = (e) => {
       e.preventDefault();
       // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
-      let { username, pubKey, points, progress } = formData;
+      let { username, pubKey, avatar, points, progress } = formData;
     
       const model = {
           username : generateUsername(),
           pubKey: pkey,
           points: 0,
+          avatar: getAvatarUrl(pkey),
           P1T1:true,
           P1T2:false,
           P1T3:false,
@@ -150,6 +157,8 @@ export default function Navbar() {
     <div className="lg:w-2/5 inline-flex lg:justify-end ml-5 lg:ml-0">
     
       <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
+      {/* <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl}/> */}
+      {connected? publicKeyExists ? <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl}/>:'':''}
       {/* {connected? <button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Save Progress</button>:""} */}
       {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Create Profile</button>:''}
     </div>

@@ -49,14 +49,14 @@ export default function LeadData() {
   )
 }
 
-function Tr({_id, username, pubKey, points }){
+function Tr({_id, username, pubKey, avatar, points }){
     return(
         <tr className="flex bg-black">
          <div class="flex flex-wrap w-full">
       <div class="p-2 w-full ">
         <div class="h-full flex items-center border-gray-200 border p-4 rounded-lg">
         {/* <h2 class="text-gray-900 title-font font-medium mr-2 text-white">Rank {rank}</h2> */}
-          {/* <img alt="team" class="w-16 h-16 bg-gray-100 object-cover object-center flex-shrink-0 rounded-full mr-4" src={getAvatarUrl(pubKey)}/> */}
+          <img alt="team" class="w-16 h-16 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md mr-4" src={avatar}/>
           <div class="flex-grow">
             <h2 class="title-font font-medium text-emerald-300">{username}</h2>
             <p class="text-pink-300">{points} Points</p>

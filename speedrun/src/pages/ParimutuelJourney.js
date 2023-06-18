@@ -68,6 +68,21 @@ for (let i = 0; i < data.length; i++) {
     // }
     
 
+    const LockedOne = () => (
+      <div className="timeline-item">
+          <div className="timeline-item-content ">
+              <div className='flex justify-center '>
+              <div className='flex items-center mr-20 font-bold'>
+              <p>Welcome to the HxroNation<br/>Let's Begin by Creating a Profile<br/> from Top-Right Corner!</p>
+              </div>
+              <button className='bg-emerald-300 rounded-full py-2 px-2'>
+              <AiFillLock size={85}/>
+              </button>
+              </div>
+              <span className="circle" />
+          </div>
+      </div>
+  );
 
     const Locked = () => (
         <div className="timeline-item">
@@ -148,7 +163,8 @@ for (let i = 0; i < data.length; i++) {
                     
                 //    Submit
                 //  </button>
-                <ModalP1T1 formId={formId}/>
+                p1t2Data?'':<ModalP1T1 formId={formId}/>
+                
                 }
                 <span className="circle" />
             </div>
@@ -191,7 +207,7 @@ for (let i = 0; i < data.length; i++) {
                   //   <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
-                  <ModalP1T2 formId={formId}/>
+                  p1t3Data?'':<ModalP1T2 formId={formId}/>
                 }
                 <span className="circle" />
             </div>
@@ -236,7 +252,7 @@ for (let i = 0; i < data.length; i++) {
                 </code>
 
                 {
-                  <ModalP1T3 formId={formId}/>
+                  p1t4Data?'':<ModalP1T3 formId={formId}/>
                   //   <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -281,7 +297,7 @@ for (let i = 0; i < data.length; i++) {
                 <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
                 </p>
                 {
-                    <ModalP1T4 formId={formId}/>
+                    p1t5Data?'':<ModalP1T4 formId={formId}/>
                   //   <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -346,7 +362,7 @@ for (let i = 0; i < data.length; i++) {
                 
 
                 {
-                    <ModalP1T5 formId={formId}/>
+                    p1t6Data?'':<ModalP1T5 formId={formId}/>
                   //   <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -384,7 +400,7 @@ for (let i = 0; i < data.length; i++) {
                 </p>
 
                 {
-                    <ModalP1T6 formId={formId}/>
+                    p1t7Data?'':<ModalP1T6 formId={formId}/>
                   //   <button onClick={scrollSix} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -419,6 +435,8 @@ for (let i = 0; i < data.length; i++) {
             </div>
         </div>
     );
+
+    
   return (
    <>
    {/* <Timeline/> */}
@@ -446,7 +464,7 @@ for (let i = 0; i < data.length; i++) {
    {connected ? (
    <div className="timeline-container">
     {/* (if(Progress.P1T1==true)?<TimelineItem1/>:<Locked/>) */}
-   {p1t1Data ? <TimelineItem1/> : <Locked/>}
+   {p1t1Data ? <TimelineItem1/> : <LockedOne/>}
    {p1t2Data ? <TimelineItem2/> : <Locked/>}
    {p1t3Data ? <TimelineItem3/> : <Locked/>}
    {p1t4Data ? <TimelineItem4/> : <Locked/>}

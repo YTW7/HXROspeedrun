@@ -32,7 +32,7 @@ export default function ModalP1T6(props) {
    const handleSubmit = async (e) => {
     e.preventDefault();
     // let userName = `${formData.firstname ?? firstname} ${formData.lastname ?? lastname}`;
-    let updated = Object.assign({}, data, { P1T7: true})
+    let updated = Object.assign({}, data, {points: (points + 30)}, { P1T7: true})
     await UpdateMutation.mutate(updated)
 }
 

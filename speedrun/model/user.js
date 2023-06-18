@@ -3,6 +3,7 @@ import { Schema, models, model } from "mongoose";
 const userSchema = new Schema({
     username: String,
     pubKey: String,
+    avatar: String,
     points: Number,    
     P1T1:Boolean,
     P1T2:Boolean,
