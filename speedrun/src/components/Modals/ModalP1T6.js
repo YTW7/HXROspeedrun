@@ -14,25 +14,26 @@ export default function ModalP1T6(props) {
   const [modal, setModal] = useState(false);
 
     const queryClient = useQueryClient()
-   const {isLoading, isError, data} = useQuery(['users', props.formId], () => getUser(props.formId))
+    const { formId, userData } = props;
+  //  const {isLoading, isError, data} = useQuery(['users', props.formId], () => getUser(props.formId))
 
-    const UpdateMutation = useMutation((newData) => updateUser(props.formId, newData), {
+    const UpdateMutation = useMutation((newData) => updateUser(formId, newData), {
         onSuccess : async (data) => {
             // queryClient.setQueryData('users', (old) => [data])
             queryClient.prefetchQuery('users', getUsers)
         }
     })
 
-    if(isLoading) return <div>Loading...!</div>
-    if(isError) return <div>Error</div>
+    // if(isLoading) return <div>Loading...!</div>
+    // if(isError) return <div>Error</div>
 
-   const { username, pubKey, points, P1T1, P1T2, P1T3, P1T4, P1T5, P1T6, P1T7, P1NFT } = data; 
+   const { username, pubKey, points, P1T1, P1T2, P1T3, P1T4, P1T5, P1T6, P1T7, P1NFT } = userData || {}; 
   //  const [firstname, lastname] = name ? name.split(' ') : formData
 
    const handleSubmit = async (e) => {
     e.preventDefault();
     // let userName = `${formData.firstname ?? firstname} ${formData.lastname ?? lastname}`;
-    let updated = Object.assign({}, data, {points: (points + 30)}, { P1T7: true})
+    let updated = Object.assign({}, userData, {points: (points + 30)}, { P1T7: true})
     await UpdateMutation.mutate(updated)
 }
 

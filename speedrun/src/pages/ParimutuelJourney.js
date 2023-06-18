@@ -24,6 +24,8 @@ export default function ParimutuelJourney() {
   
   const { connected, publicKey } = useWallet();
   const { isLoading, isError, data, error } = useQuery('users', getUsers)
+  
+  
   // if(isLoading) return <div>Data is Loading...</div>;
   // if(isError) return <div>Got Error {error}</div>
 
@@ -52,7 +54,7 @@ for (let i = 0; i < data?.length; i++) {
     break;
   }
 }
-  
+const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUser(formId))
     
 
     const LockedOne = () => (
@@ -150,7 +152,7 @@ for (let i = 0; i < data?.length; i++) {
                     
                 //    Submit
                 //  </button>
-                p1t2Data?'':<ModalP1T1 formId={formId}/>
+                p1t2Data?'':<ModalP1T1 formId={formId} userData={userData}/>
                 
                 }
                 <span className="circle" />
@@ -194,7 +196,7 @@ for (let i = 0; i < data?.length; i++) {
                   //   <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
-                  p1t3Data?'':<ModalP1T2 formId={formId}/>
+                  p1t3Data?'':<ModalP1T2 formId={formId} userData={userData}/>
                 }
                 <span className="circle" />
             </div>
@@ -239,7 +241,7 @@ for (let i = 0; i < data?.length; i++) {
                 </code>
 
                 {
-                  p1t4Data?'':<ModalP1T3 formId={formId}/>
+                  p1t4Data?'':<ModalP1T3 formId={formId} userData={userData}/>
                   //   <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -284,7 +286,7 @@ for (let i = 0; i < data?.length; i++) {
                 <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
                 </p>
                 {
-                    p1t5Data?'':<ModalP1T4 formId={formId}/>
+                    p1t5Data?'':<ModalP1T4 formId={formId} userData={userData}/>
                   //   <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -349,7 +351,7 @@ for (let i = 0; i < data?.length; i++) {
                 
 
                 {
-                    p1t6Data?'':<ModalP1T5 formId={formId}/>
+                    p1t6Data?'':<ModalP1T5 formId={formId} userData={userData}/>
                   //   <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -387,7 +389,7 @@ for (let i = 0; i < data?.length; i++) {
                 </p>
 
                 {
-                    p1t7Data?'':<ModalP1T6 formId={formId}/>
+                    p1t7Data?'':<ModalP1T6 formId={formId} userData={userData}/>
                   //   <button onClick={scrollSix} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
