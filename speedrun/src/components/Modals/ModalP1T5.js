@@ -7,10 +7,30 @@ import { useQuery, useMutation, useQueryClient } from "react-query"
 import { getUser, getUsers, updateUser } from "../../../lib/helper"
 import { useWallet } from '@solana/wallet-adapter-react';
 
-
+import validateWebsiteLink from "@/functions/validateWebsiteLink";
 
 export default function ModalP1T5(props) {
   const [modal, setModal] = useState(false);
+
+  const [userInput, setUserInput] = useState('');
+  const [validationError, setValidationError] = useState('');
+
+  const handleInputChange = (event) => {
+    // setUserInput(event.target.value);
+    // setValidationError(''); // Clear any previous validation error
+    // console.log(validateWebsiteLink(userInput))
+    // if (validateWebsiteLink(userInput)==false) {
+    //   setValidationError("Invalid URL");
+
+    // }
+    const inputValue = event.target.value;
+    setUserInput(inputValue);
+    setValidationError(''); // Clear any previous validation error
+  
+    if (!validateWebsiteLink(inputValue)) {
+      setValidationError("Invalid URL! Kindly Check the Input");
+    }
+  };
 
     const queryClient = useQueryClient()
    const {isLoading, isError, data} = useQuery(['users', props.formId], () => getUser(props.formId))
@@ -86,33 +106,55 @@ export default function ModalP1T5(props) {
 
       {modal && (
         <div className="modal">
-          <div onClick={toggleModal} className="overlay"></div>
-          <div className="modal-content">
-            <h2 className="text-center font-bold text-emerald-500 text-2xl">Submit Your Progress!</h2>
-            <div className="flex justify-center w-200">
-            <p>
-             1. Make a new git branch,<br/> 2. With the step number and <br/>3. Submit the branch link here: 
-            </p>
-            </div>
-            <button className="close-modal  rounded-lg hover:text-white font-bold" onClick={toggleModal}>
-            <ImCross size={25}/>
+        <div onClick={toggleModal} className="overlay"></div>
+        <div className="modal-content">
+          <h2 className="text-center font-bold text-emerald-500 text-2xl">Submit Your Progress!</h2>
+          <div className="flex justify-center ">
+          <p>
+           1. Make a new Git Branch with the step number,<br/>
+           <code className='flex justify-center bg-emerald-200 rounded-md font-bold px-2 py-2'>
+              //use these command to create a new branch<br/> //and shift to that branch<br/>
+              git checkout -b {'<branch-name>'}<br/><br/>
+              //create a remote branch<br/>
+              git remote add {'<remote_name>'} {'<remote_url>'}<br/>
+              git push {'<remote_name>'} {'<local_branch_name>'}
+              </code><br/>
+            2. Submit the Branch Link here: 
+          </p>
+          
+          </div>
+          
+          <button className="close-modal  rounded-lg hover:text-white font-bold" onClick={toggleModal}>
+          <ImCross size={25}/>
+          </button>
+          <div className="flex justify-center">
+          <input
+            className="rounded-md px-2 py-1 "
+            style={{ width: "390px" }}
+            placeholder="e.g. https://github.com/u_name/p_name/tree/branch"
+            onChange={handleInputChange}
+            value={userInput}
+          />
+          </div>
+         
+          
+          {validationError && (
+                                <div className="flex justify-center">
+                                  <p className="text-red-500">{validationError}</p>
+                                </div>
+                              )}
+          <div className="flex justify-center">
+          <button className={`bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2 ${(validationError || userInput.length === 0) ? 'blur' : ''}`} onClick={handleSubmit} disabled={!!validationError && userInput.length === 0}>
+              SUBMIT HERE
             </button>
-            <div className="flex justify-center w-300">
-            <input className=" rounded-md px-2 py-1 " placeholder="git branch link"></input>
-            
-            </div>
-            <div className="flex justify-center">
-            <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2" onClick={handleSubmit}>
-              SUBMIT
-            </button>
-            {/* <a href="http://twitter.com/home?status=I%20am%20happy%20to%20share%20that%20I've%20completed%20the%20first%20task%20on%20@SpeedrunHXRO%20for%20Parimutuel%20SDK.%20%20@HxroNetwork%20@RealHxroLabs%20@ThalesHXRO">
-            <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-2 py-1 mt-8 mb-2 ml-2 ">
-             <AiFillTwitterCircle/>
-            </button>
-            </a> */}
-            </div>
+          {/* <a href="http://twitter.com/home?status=I%20am%20happy%20to%20share%20that%20I've%20completed%20the%20first%20task%20on%20@SpeedrunHXRO%20for%20Parimutuel%20SDK.%20%20@HxroNetwork%20@RealHxroLabs%20@ThalesHXRO">
+          <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-2 py-1 mt-8 mb-2 ml-2 ">
+           <AiFillTwitterCircle/>
+          </button>
+          </a> */}
           </div>
         </div>
+      </div>
       )}
       
     </>

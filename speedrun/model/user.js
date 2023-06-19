@@ -12,7 +12,8 @@ const userSchema = new Schema({
     P1T5:Boolean,
     P1T6:Boolean,
     P1T7:Boolean,
-    P1NFT:Boolean 
+    P1NFT:Boolean,
+    P1Milestone:String 
 });
 
 const Users = models.user || model('user', userSchema)
