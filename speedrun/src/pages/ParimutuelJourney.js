@@ -54,7 +54,6 @@ for (let i = 0; i < data?.length; i++) {
     break;
   }
 }
-const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUser(formId))
     
 
     const LockedOne = () => (
@@ -152,7 +151,7 @@ const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUs
                     
                 //    Submit
                 //  </button>
-                p1t2Data?'':<ModalP1T1 formId={formId} userData={userData}/>
+                p1t2Data?'':<ModalP1T1 formId={formId} />
                 
                 }
                 <span className="circle" />
@@ -196,7 +195,7 @@ const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUs
                   //   <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
-                  p1t3Data?'':<ModalP1T2 formId={formId} userData={userData}/>
+                  p1t3Data?'':<ModalP1T2 formId={formId} />
                 }
                 <span className="circle" />
             </div>
@@ -241,7 +240,7 @@ const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUs
                 </code>
 
                 {
-                  p1t4Data?'':<ModalP1T3 formId={formId} userData={userData}/>
+                  p1t4Data?'':<ModalP1T3 formId={formId}/>
                   //   <button onClick={scrollThree} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -286,7 +285,7 @@ const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUs
                 <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
                 </p>
                 {
-                    p1t5Data?'':<ModalP1T4 formId={formId} userData={userData}/>
+                    p1t5Data?'':<ModalP1T4 formId={formId} />
                   //   <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -351,7 +350,7 @@ const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUs
                 
 
                 {
-                    p1t6Data?'':<ModalP1T5 formId={formId} userData={userData}/>
+                    p1t6Data?'':<ModalP1T5 formId={formId}/>
                   //   <button onClick={scrollFive} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
@@ -389,7 +388,7 @@ const {isLoading2, isError2, userData} = useQuery(['users', formId], () => getUs
                 </p>
 
                 {
-                    p1t7Data?'':<ModalP1T6 formId={formId} userData={userData}/>
+                    p1t7Data?'':<ModalP1T6 formId={formId}/>
                   //   <button onClick={scrollSix} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
