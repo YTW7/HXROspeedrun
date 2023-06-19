@@ -24,6 +24,8 @@ export default function ParimutuelJourney() {
   
   const { connected, publicKey } = useWallet();
   const { isLoading, isError, data, error } = useQuery('users', getUsers)
+  
+  
   if(isLoading) return <div>Data is Loading...</div>;
   if(isError) return <div>Got Error {error}</div>
 
@@ -38,7 +40,7 @@ export default function ParimutuelJourney() {
   let formId = null;
   const pkey = connected ? publicKey.toString() : '';
 
-for (let i = 0; i < data.length; i++) {
+for (let i = 0; i < data?.length; i++) {
   if (data[i].pubKey === pkey) {
     p1t1Data = data[i].P1T1;
     p1t2Data = data[i].P1T2;
@@ -52,7 +54,6 @@ for (let i = 0; i < data.length; i++) {
     break;
   }
 }
-  
     
 
     const LockedOne = () => (
@@ -150,7 +151,7 @@ for (let i = 0; i < data.length; i++) {
                     
                 //    Submit
                 //  </button>
-                p1t2Data?'':<ModalP1T1 formId={formId}/>
+                p1t2Data?'':<ModalP1T1 formId={formId} />
                 
                 }
                 <span className="circle" />
@@ -194,7 +195,7 @@ for (let i = 0; i < data.length; i++) {
                   //   <button onClick={scrollTwo} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>
-                  p1t3Data?'':<ModalP1T2 formId={formId}/>
+                  p1t3Data?'':<ModalP1T2 formId={formId} />
                 }
                 <span className="circle" />
             </div>
@@ -284,7 +285,7 @@ for (let i = 0; i < data.length; i++) {
                 <b className=' ml-2'>Note:</b> values in USDC should be divided by 1,000,000, as this is the number of decimals the USDC SPL token has on Solana.
                 </p>
                 {
-                    p1t5Data?'':<ModalP1T4 formId={formId}/>
+                    p1t5Data?'':<ModalP1T4 formId={formId} />
                   //   <button onClick={scrollFour} className="btn-modal bg-emerald-300 rounded-full font-bold">
                   //   Submit 
                   // </button>

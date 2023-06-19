@@ -5,7 +5,10 @@ import Homepage from '@/components/Homepage'
 import ProjectData from '@/components/ProjectData'
 const inter = Inter({ subsets: ['latin'] })
 
+
+
 export default function Projects() {
+
   return (
    <>
    <div className="container  mx-auto">
