@@ -60,7 +60,7 @@ export default function Navbar() {
     const handleSubmit = (e) => {
       // e.preventDefault();
       // if(Object.keys(formData).length == 0) return console.log("Don't have Form Data");
-      let { username, pubKey, avatar, points } = formData;
+      // let { username, pubKey, avatar, points } = formData;
     
       const model = {
           username : generateUsername(),
