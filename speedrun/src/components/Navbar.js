@@ -122,7 +122,7 @@ export default function Navbar() {
     
       <WalletMultiButton  className='bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400'/>
       {/* <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl}/> */}
-      {connected? publicKeyExists ? <img alt="team" class="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl} onClick={()=>setProfileModal(!profileModal)}/>:'':''}
+      {connected? publicKeyExists ? <img alt="team" className="w-12 h-12 bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 object-cover object-center flex-shrink-0 rounded-md ml-2" src={avatarUrl} onClick={()=>setProfileModal(!profileModal)}/>:'':''}
       
       {/* {connected? publicKeyExists ? '':<button onClick={handleSubmit} className='ml-2 inline-flex items-center bg-gradient-to-tr from-pink-300 via-blue-300 to-emerald-400 border-0 py-3 px-3 focus:outline-none hover:bg-gradient-to-br from-pink-300 via-blue-300 to-emerald-400 rounded text-white font-bold mt-4 md:mt-0'>Create Profile</button>:''} */}
     </div>

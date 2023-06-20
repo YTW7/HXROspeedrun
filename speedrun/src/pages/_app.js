@@ -11,12 +11,18 @@ const queryClient = new QueryClient();
 
 export default function App({ Component, pageProps }) {
   return (
-    <QueryClientProvider client={queryClient}>
-            <WalletConnectionProvider>
-              <Navbar/>
-                <Component {...pageProps} />
-            </WalletConnectionProvider>
-    </QueryClientProvider>
+    <>
+              <Head>
+               <title>SpeedrunHXRO</title> 
+               <link rel='icon' href='/icon.png'/> 
+              </Head>
+              <QueryClientProvider client={queryClient}>
+                      <WalletConnectionProvider>
+                        <Navbar/>
+                          <Component {...pageProps} />
+                      </WalletConnectionProvider>
+              </QueryClientProvider>
+    </>
 
   )
  
