@@ -1,5 +1,5 @@
 
-const BASE_URL = "https://ytw7-cautious-winner-x694v9wqjgfvvgq-3000.preview.app.github.dev/"
+const BASE_URL = "https://hxrospeedrun.vercel.app/"
 
 export const getUsers = async () => {
     const response = await fetch(`${BASE_URL}api/users`)
