@@ -1,12 +1,12 @@
-import { getUsers } from '../../lib/helper';
-import { useQuery } from 'react-query';
+// import { getUsers } from '../../lib/helper';
+// import { useQuery } from 'react-query';
 
 
-export default function getUserHook(){
+// export default function getUserHook(){
 
 
-    const { isLoading, isError, data, error } = useQuery('users', getUsers)
+//     const { isLoading, isError, data, error } = useQuery('users', getUsers)
 
 
-    return {data};
-}
+//     return {data};
+// }
