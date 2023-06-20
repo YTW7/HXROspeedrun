@@ -29,8 +29,9 @@ export default function ProjectData() {
   )
 }
 
-function Tr({_id, username, pubKey, avatar, points, P1Milestone }){
+function Tr({_id, username, pubKey, avatar, points, P1Milestone, P1NFT }){
   return(
+    P1NFT ?
       <tr className="flex bg-black">
        <div class="flex flex-wrap w-full">
     <div class="p-2 w-full ">
@@ -60,7 +61,7 @@ function Tr({_id, username, pubKey, avatar, points, P1Milestone }){
       </div>
     </div>
     </div>
-  </tr>
+  </tr>:''
 
 )
 }
