@@ -13,7 +13,7 @@ import Gist from "react-gist";
 import Frame from 'react-frame-component';
 // const fs = require('fs');
 
-export default function DexterityJourney() {
+export default function ParimutuelReact() {
   
   const { connected, publicKey } = useWallet();
 
@@ -99,17 +99,18 @@ export default function DexterityJourney() {
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+10 Points"}
                 </span>
-                <time className='text-3xl'>{"Import Dependencies & Setting up an RPC"}</time>
-                
+                <time className='text-3xl'>{"Create Required Components"}</time>
+                <p>1. Begin by changing the branch from main to doc-template.<br/>
+                2. Our next stop is src/views/home/index.tsx, which will be the homepage view.<br/>
+                3. Navigate to the components folder under src<br/>
+                4. Here, you'll create four new files with the .tsx extension:<br/>
+                <p className='ml-10'>1. Config.tsx - This is where we are going to set our global config variable for the ParimutuelWeb3 connection</p>
+                <p className='ml-5'>2. PariBox.tsx - This component will be used for each parimutuel market we want to add</p>
+                <p className='ml-5'>3. PlacePositionBox.tsx - This component will handle the amount a user wants to set for a trade and make the call to the PlacePosition component to place the trade</p>
+                <p className='ml-5'>4. PlacePosition.tsx - This component will handle the placement of the position and send a transaction request to the user's wallet</p>
+                </p>
                 <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2'> 
-                    import {'{ clusterApiUrl, Keypair, PublicKey }'} from "@solana/web3.js";<br/>
-                    import {'{ Wallet }'} from "@project-serum/anchor";<br/>
-                    import dexterityTs from "@hxronetwork/dexterity-ts";<br/>
-                    const dexterity = dexterityTs;<br/>
-                    import bs58 from 'bs58'<br/><br/>
-                    //Setting up the RPC<br/>
-                    const CLUSTER_NAME = "testnet";<br/>
-                    const rpc = clusterApiUrl(CLUSTER_NAME);<br/>
+                
                     
                 </code>
                 {
@@ -130,21 +131,20 @@ export default function DexterityJourney() {
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+10 Points"}
                 </span>
-                <time className='text-3xl'>{"Setting up a Test Wallet"}</time>
+                <time className='text-3xl'>{"Set up Config.js"}</time>
                 <p>
-                To sign transactions and create the TRG account, set up your wallet with your private key. Replace the priv_key variable with your own private key.
+                Import the DEV_CONFIG to interact with the devnet parimutuel protocol. For mainnet, import MAINNET_CONFIG and export PariConfig to use it throughout the project.
                 <br/>
                 </p>
                 <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
-                const priv_key = "YOUR-PRIVATE-KEY"<br/>
-                const keypair = Keypair.fromSecretKey{'('}<br/>
-                    bs58.decode(priv_key)<br/>
-                {')'};<br/>
-                const wallet = new Wallet(keypair);<br/>
-                </code><br/>
-                <p>
-                It is highly recommended that you create a new wallet to be used exclusively for testing purposes. This can be done via Phantom or any other Solana wallet, subsequently allowing you to retrieve the private key, and use it in your project. Once you have set up your wallet,<br/> you can then airdrop <b>Testnet SOL</b> to it from <a className="underline" href='https://solfaucet.com/'>here</a>.
-                </p>
+                {'import { DEV_CONFIG, MAINNET_CONFIG } from "@hxronetwork/parimutuelsdk";'}<br/><br/>
+
+                  export const PariConfig = {'{'} <br/>
+                  config: DEV_CONFIG <br/>
+                  {'}'}
+                
+                </code>
+              
                 {
                     <button onClick={scrollTwo} className="btn-modal bg-pink-300 rounded-full font-bold">
                     Submit 
@@ -159,23 +159,76 @@ export default function DexterityJourney() {
         <div className="timeline-item-dex" id="timeline-item-2">
             <div className="timeline-item-dex-content">
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
-                    {"+10 Points"}
+                    {"+20 Points"}
                 </span>
-                <time className='text-3xl'>{"Getting the Manifest"}</time>
+                <time className='text-3xl'>{"Build PariBox Component, PT. 1: Import Dependencies"}</time>
                 <p>
                 
-                Create an asynchronous function called <b>CreateTRG()</b> in order to connect to Dexterity and obtain the <b>manifest</b>.<br/> This is achieved by using the <b>getManifest(rpc, useCache, wallet)</b> method, passing in 'your rpc' for <b>rpc</b>, a boolean for <b>useCache</b> (for this tutorial,  false is used), and your wallet for <b>wallet</b>.
+                Importing Dependencies
+                We will start by importing the necessary dependencies needed for our PariBox component.
+                The dependencies that will be utilized are as follows:
                 </p>
                 <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
-                const CreateTRG = async() ={'> {'}<br/><br/>
-                // get the latest manifest<br/>
-                {'const manifest = await dexterity.getManifest(rpc, false, wallet);'}<br/><br/>
-              {'}'}<br/>
-              CreateTRG()<br/>
+                {'import { useConnection } from "@solana/wallet-adapter-react";'}
+                {'import { FC, useState } from "react";'}
+                {'import {'}
+                ParimutuelWeb3,
+                MarketPairEnum,
+                getMarketPubkeys,
+                calculateNetOdd,
+                {'} from "@hxronetwork/parimutuelsdk";'}
+                {'import { useEffect } from "react";'}
+                {'import { PariConfig } from "./Config";'}
                 </code>
                 <p>
-                If the file is ran, you should now see your Manifest object printed out in the console.
+                With these dependencies in place, we are now ready to start building our PariBox component.
+       Before diving in, let's first prepare a few essential elements under our imports that will be utilized later on:
+        1. Create a PariObj interface to store the contest information, including the Long and Short Pools' amounts, odds, and pubkey.
                 </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
+                {'interface PariObj {'}
+    longPool: any; // This is how much money is in the Long Pool of the contest
+    shortPool: any; // This is how much money is in the Short Pool of the contest
+    longOdds: string; // This is the weighted odds of the Long Pool
+    shortOdds: string; // This is the weighted odds of the Short Pool
+    pubkey: string; // This is the contest pubkey
+{'}'}//Next, create a constant named TimeInterval to store various time intervals for ease of use.
+                </code>
+                <p>
+                2. Create a constant named TimeInterval to store various time intervals for ease of use.
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 py-2 pr-24'> 
+                const TimeInterval = [
+    {'{'}
+        interval: '1M',
+        seconds: 60,
+        title: "1 MINUTE",
+    {'},'}
+
+    {'{'}
+        interval: '5M',
+        seconds: 300,
+        title: "5 MINUTE",
+  {'  },'}
+
+   {' {'}
+        interval: '15M',
+        seconds: 900,
+        title: "15 MINUTE",
+   {' },'}
+
+ {'   {'}
+        interval: '1H',
+        seconds: 3600,
+        title: "1 HOUR",
+{'    },'}
+    {'{'}
+        interval: '1D',
+        seconds: 86400,
+        title: "1 DAY",
+   {' },'}
+];
+                </code>
 
                 {
                     // <Modal/>
@@ -193,33 +246,65 @@ export default function DexterityJourney() {
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+20 Points"}
                 </span>
-                <time className='text-3xl'>{"Selecting our MPG"}</time>
+                <time className='text-3xl'>{"Build PariBox Component, PT. 2: Building Main Component"}</time>
                 <p>
-                This tutorial will focus solely on utilizing the BTC-USD MPG.<br/>
-                In the <b>DexExample()</b> function, it is recommended to establish a constant for the BTC-USD MPG publickey.<br/>
+                1. Start by creating a functional component called PariBox. It will take in a prop called time.
                 </p>
                 <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                // BTC-USD Market-Product-Group PubKey<br/>
-                const MPG = "DDxNzq3A4qKJxnK2PFYeXE1SgGXCR5baaDBhpfLn3LRS"<br/>
-                const mpgPubkey = new PublicKey(MPG);<br/>
+                export const PariBox: {'FC<{ time: string }>'} = (props) ={'> {'}<br/>
+                  {'const { time } = props;'}
                 </code>
 
                 <p>
-                <b>Creating your TRG</b><br/><br/>
-                To create a TRG for the BTC-USD MPG, use the createTrg(marketProductGroup) from *manifest* and pass in mpgPubkey for <b>marketProductGroup</b>, then you can console.log your result.<br/>
+                2. Next, filter the TimeInterval array to find the object that matches the time prop passed in.
                 </p>
                 <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                //Create our TRG for the BTC-USD MPG <br/>
-                const trgPubkey = await manifest.createTrg(mpgPubkey);<br/>
-                console.log("success! trg pubkey:", trgPubkey.toBase58());<br/>
+                const selectedTime = TimeInterval.filter((data) ={'>'} data.interval === time);
                 </code>
-                <p>When the file is ran, you should see the following:</p>
+                <p>3. Extract the seconds and title properties from the selected object.</p>
                 <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
-                success! trg pubkey: CUNNMSSRVFu82wXSjkrdhZFPKwKmAf7uLoxLHDRgVCnN<br/>
+                const timeSeconds = selectedTime[0].seconds
+                const timeTitle = selectedTime[0].title
                 </code>
                 <p>
-                Nicely done! You just created your first TRG for the BTC-USD MPG. The following section provides an overview of how to use the TRG trader account to deposit capital into the account, trade products inside of the MPG, cancel positions, and more.
+                4. Define a state variable to store the PariObj data. The useState hook is used to manage this state in the function component.
                 </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                const [pariObj, setPariObj] = useState{'<PariObj>'}();
+                </code>
+                <p>
+                  5. Define a state variable to store the countDownTime data. The useState hook is used to manage this state in the function component.
+                </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                const [countDownTime, setCountDownTime] = useState{'<string>'}("");
+                </code>
+                <p>
+                6. Create a constant config that holds the configuration values imported from the Config.tsx file
+                </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                const { config } = PariConfig;
+                </code>
+                <p>
+                7. Create constant **connection** , which handles the connection to Solana depending on the user's wallet, and instantiate a new ParimutuelWeb3 object with config and connection as parameters.
+                </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                const { connection } = useConnection();<br/>
+                   const parimutuelWeb3 = new ParimutuelWeb3(config, connection);
+                </code>
+                <p>
+                8. Define the marketPair with **MarketPairEnum** to select the market that we want to get the contests from. For markets , use the **getMarketPubkeys** method to retrieve all of the Pubkeys of the specified market/s, and create a marketsByTime variable that filters the markets based on whether the duration is the same as timeSeconds value so that we get only the contests from the desired time interval.
+                </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                // To get only the BTC-USD Market Contests
+                const marketPair = MarketPairEnum.BTCUSD; 
+                
+                const markets = getMarketPubkeys(config, marketPair);
+                const marketsByTime = markets.filter(
+                    (market) ={'>'} market.duration === timeSeconds
+                );
+                </code>
+
+
                 {
                     // <Modal/>
                     <button onClick={scrollFour} className="btn-modal bg-pink-300 rounded-full font-bold">
@@ -236,94 +321,76 @@ export default function DexterityJourney() {
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+30 Points"}
                 </span>
-                <time className='text-3xl'>{"Using TRGs: Depositing & Withdrawing from TRGs"}</time>
+                <time className='text-3xl'>{"Build PariBox Component, PT. 3: Getting contest data"}</time>
+                
                 <p>
-
-                Create a new file called <b>fundingTrg.ts</b> where you will build your own function to deposit and withdraw from a TRG.<br/>
-                Copy and paste the code below into your new file:
-                </p>
-                {/* <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-18 py-2'> */}
-                {/* {'import { clusterApiUrl, Keypair, PublicKey } from "@solana/web3.js";'}<br/>
-                {'import { Wallet } from "@project-serum/anchor";'}<br/>
-                import dexterityTs from "@hxronetwork/dexterity-ts";<br/>
-                const dexterity = dexterityTs;<br/>
-                import bs58 from 'bs58'<br/><br/>
-                
-                // Solana Testnet RPC for connection, which can be used later to get your manifest<br/>
-                const CLUSTER_NAME = "testnet";<br/>
-                const rpc = clusterApiUrl(CLUSTER_NAME);<br/>
-                // or your own RPC URL // const rpc = "https://your-own-rpc.com"<br/><br/>
-                
-                // Setting up our wallet with our Private Key so that we can sign transactions and create our trg account from it<br/>
-                const priv_key = bs58.decode("YOUR-PRIVATE_KEY")<br/>
-                const keypair = Keypair.fromSecretKey(<br/>
-                    priv_key<br/>
-                );<br/><br/>
-                
-                // From the keypair we can pass it to the Wallet() method<br/> to then be able to pass it in getManifest
-                const wallet = new Wallet(keypair);<br/><br/>
-                
-                const fundingTRG = async () ={'> {'}<br/><br/>
-                
-                    // Get the latest manifest<br/>
-                    const manifest = await dexterity.getManifest(rpc, false, wallet);<br/><br/>
-                
-                    // BTC-USD Market-Product-Group PubKey<br/>
-                    const MPG = new PublicKey("DDxNzq3A4qKJxnK2PFYeXE1SgGXCR5baaDBhpfLn3LRS")<br/>
-                    // Our TRG for the BTC-USD MPG <br/>
-                    const trgPubkey = new PublicKey("YOUR-TRG");<br/><br/>
-                
-                    console.log(<br/>
-                        {'`Wallet: ${wallet.publicKey.toBase58()} TRG: ${trgPubkey.toBase58()}`'}<br/>
-                    );<br/>
-                {'}'}<br/><br/>
-                
-                fundingTRG()<br/> */}
-                {/* </code> */}
-                <Gist style={{width:"100%"}} id="414258ad39f35e479b69659deece0370"></Gist>
-                <p>
-                To interact with dexterity and the products inside your MPG using TRG, a trader instance is needed. To create one, use the trader method from dexterity and pass in your trgPubkey and manifest.
+                1. Use the useEffect hook to run a specific effect when the component is rendered. In this case, the effect will fetch data about the contest and set it in the pariObj state.
                 </p>
                 <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const trader = new dexterity.Trader(manifest, trgPubkey);
+                {'useEffect(() ={'>'} {'}
+    {'const getPariData = async () => {'}
+
+        // make sure that we don't exceed the localStorage 10MB capacity when 
+        // calling our data
+        {'localStorage.clear(); '}
+
+        // Fetch contest data and set it in the pariObj state
+   {' };'}
+  {'  fetchData();'}
+{'}, []);'}
+                </code>
+
+                <p>
+                Retrieving contests<br/>
+                2. Use the parimutuelWeb3.getParimutuels method to retrieve the parimutuel data from the parimutuels array marketsByTerm , and retrieve the duration of the selected parimutuel market.
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                const parimutuels = await parimutuelWeb3.getParimutuels(marketsByTime);
+                  const duration = marketsByTime[0].duration;
+                </code>
+                <p>3. Use the parimutuelWeb3.getMarkets method to retrieve the market data.</p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                const getMarkets = await parimutuelWeb3.getMarkets(market)
                 </code>
                 <p>
-                Next, create a viewAccount() function that allows you to view the cash balance of your TRG account. This will help you to know how much is in the account and enable you to withdraw and deposit funds as needed. This is achieved by using the getNetCash() method from your trader instance:
+                4. To retrieve only the next-in-line contests, filter the parimutuels array to find the parimutuel accounts that match the conditions.
                 </p>
                 <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
-                // View Cash amount in TRG account<br/>
-                 const viewAccount = async() ={'> {'}<br/>
-                     console.log(
-                      "NetCash:",
-                       trader.getNetCash().toString(),<br/>
-                     );<br/>
-                 {'};'}<br/>
+                const pari_markets = parimutuels.filter(
+                     (account) ={'>'}
+                         account.info.parimutuel.timeWindowStart.toNumber() {'>'} Date.now() &&
+                         account.info.parimutuel.timeWindowStart.toNumber() {"<"}
+                         Date.now() + duration * 1000
+                 );
                 </code>
                 <p>
-                Next, to obtain updated account information, connect to your trader account. To do this, use the connect method from your trader instance. The connect method allows you to pass in a function as the first argument to get a perpetual update stream, meaning that it will call your function perpetually. Alternatively, you can pass in a function as the second argument to get an account update only once. In this case, you are going to pass in your viewAccount() function to only output your cash balance once when you call the account() function.
+                Extracting data from contests<br/>
+                 Assigning data to variables:
+                </p>
+                <Gist style={{width:"100%"}} id="622c67db2840d931560dbeaab05e090f"></Gist>
+                <p>
+                Formatting countdown timer to display:
+                </p>
+                <Gist style={{width:"100%"}} id="52973c2c366c06459b9e2fe9b0ebeb4a"></Gist>
+                <p>
+                Here, we can close our getPariStats() function.<br/><br/>
+                Calling our data<br/><br/>
+                To start a recurring function call, use the setInterval() function. The setInterval() function takes two parameters: the first parameter is the function that you want to call repeatedly, and the second parameter is the interval in milliseconds.<br/><br/>
+                Here, we want to call the getPariData() function every second, so the interval is set to 1000 milliseconds or 1 second.<br/>
                 </p>
                 <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
-                // Connect to the trader & get updated account cash balance<br/>
-                const account = async() ={'>'} await trader.connect(NaN, viewAccount)<br/><br/>
-
-                await account()<br/>
+                const intervalId = setInterval(() ={'>'} getPariData(), 1000);
                 </code>
                 <p>
-                To proceed, you will need Testnet Hxro, UXDC
-                💡 UXDC is an SPL token issued by Hxro Network that is used to test Dexterity Contracts on the Solana Testnet & Devnet<br/><br/>
-                UXDC Faucet: https://uxdc-faucet-api-1srh.vercel.app/<br/><br/>
-                
-                After obtaining UXDC (remember to also have Testnet SOL for transaction fees), create a function to deposit and withdraw UXDC from your TRG<br/><br/>
+                To avoid memory leaks, it's important to clean up any recurring functions when the component that started it unmounts. To do this, return a function that calls clearInterval() and pass in the intervalId.
+                </p>
+                <code className='bg-pink-200 rounded-md font-bold pl-2 pr-24 py-2'>
+                {'return () => clearInterval(intervalId);'}<br/><br/>
 
-                To use the deposit and withdraw methods from the trader instance, pass in a Fractional type from your dexterity instance. To create a Fractional, use <b>dexterity.Fractional.New(amount: number, exponent: number)</b><br/><br/>
+                 {' }, []);'}
+                </code>
+                <p>Now, we have a function that updates our data every second until the component unmounts and the interval is cleared.</p>
 
-                The Fractional method from the dexterity instance creates a new fractional value with a specified numerator and denominator. It is used to represent numbers with fractional values, such as decimals or percentages, and allows for precise calculations with those values.
-              </p>
-              <Gist style={{width:"100%"}} id="85e0420d3e7738858604e9e04da5998e"></Gist>
-              <p>
-              You can now run the code and observe that it deposited 5,000 UXDC from your wallet account to your TRG account. After that, you can comment out the deposit function and uncomment the withdraw function. Running the code again will withdraw the UXDC from your TRG account and transfer it back to your test wallet account.
-              </p>
-              
 
                 {
                     // <Modal/>
@@ -342,88 +409,21 @@ export default function DexterityJourney() {
                 <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                     {"+30 Points"}
                 </span>
-                <time className='text-3xl'>{"Placing Limit Orders{Setup}"}</time>
+                <time className='text-3xl'>{"Build PariBox Component, PT. 4: Rendering Our Data"}</time>
                 <p>
+                Let's build the UI of our Pari Box component.
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                {'return ('}
+                          // Render contents here
+                    {'  );'}
+                </code>
 
-                Create a new file called <b>limitOrder.ts</b> which will be used to build your own function to create and place limit orders<br/><br/>
-You can copy and paste the code below into your new file:<br/>
-                </p>
-                <Gist style={{width:"100%"}} id="9170779690c08fd18ddf1129accdd047"></Gist>
                 <p>
-                Moving forward, for simplification purposes, you will only use the 'BTCUSD-PERP' perpetual product within your BTCUSD Market Product Group.
+                To make it easier, here is the code you can copy and paste inside of return:
                 </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const PRODUCT_NAME = 'BTCUSD-PERP';
-                </code>
-                <p>
-                Create a trader instance that can be used to interact and trade on Dexterity.
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const trader = new dexterity.Trader(manifest, trgPubkey);
-                </code>
-                <p>
-                Create a function that handles updates on the TRG account and logs out the TRGs account cash balance (in USDC) to the console.
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const streamAccount = () ={'> {'}<br/>
-                        console.log(<br/>
-                          'Portfolio Value:',<br/>
-                          trader.getPortfolioValue().toString(),<br/>
-                          'Position Value:',<br/>
-                          trader.getPositionValue().toString(),<br/>
-                          'Net Cash:',<br/>
-                          trader.getNetCash().toString(),<br/>
-                          'PnL:',<br/>
-                          trader.getPnL().toString()<br/>
-                        );<br/>
-                     {' };'}<br/>
-                </code>
-                <p>
-                Call the connect() method from trader so updates are streamed.
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const account = async () ={'> {'}
-                       await trader.connect(NaN, streamAccount);
-                       {'};'}
-                       
-                       await account()
-                </code>
-                <p>
-                You are currently iterating over a list of products obtained using the getProducts() method from the trader instance. The objective is to find the index of a particular product you are interested in. In this case, that is the BTCUSD-PERP product.
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                let perpIndex: any;<br/>
-                     {'for (const [name, {index, product}] of trader.getProducts()) {'}<br/>
-                       console.log('saw', name, ' ', index);<br/>
-                       {'if (name !== PRODUCT_NAME) {'}<br/>
-                         continue;<br/>
-                       {'}'}<br/>
-                       perpIndex = index;<br/>
-                       break;<br/>
-                     {'}'}<br/>
-                </code>
-                <p>
-                Now, set up a QUOTE_SIZE constant that is needed to establish the order amount:
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                // 1.0000 contracts<br/>
-                const QUOTE_SIZE = dexterity.Fractional.New(1, 0);<br/>
-                </code>
-                <p>
-                QUOTE_SIZE: This constant represents the size of a contract. In this case, it is set to a value of 1.0000 contracts. Therefore, when a user enters a size of 1, they will receive one contract.<br/><br/>
-
-                Then, set a constant for the price of BTCUSD that will be used to set limit orders:
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const price = 22_000
-                </code>
-                <p>
-                Note: As of the creation of this walkthrough, to place an order using Dexterity, the limit order price must be within 15% of the mark price, up or down.
-                Now, use the dexterity.Fractional.New method to convert the price into a fractional value with zero decimal places.
-                </p>
-                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-                const dollars = dexterity.Fractional.New(price, 0);
-                </code>
+                <Gist style={{width:"100%"}} id="61432a3e7c9dedc06160f702c173093c"></Gist>
+                
 
                 {
                     // <ModalNFT/>
@@ -442,37 +442,26 @@ You can copy and paste the code below into your new file:<br/>
               <span className="tag rounded-xl mt-3 mr-3" style={{ background: "rgb(255, 73, 246)" }}>
                   {"+20 Points"}
               </span>
-              <time className='text-3xl'>{"Placing Limit Orders{Core Functions}"}</time>
+              <time className='text-3xl'>{"Build PariBox Component, PT. 5: Testing"}</time>
               <p>
+              Now, let's test it!
+              1. Go to src/view/home.tsx and import PariBox.tsx
+              2. Import the PariBox component
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                //Pari Box
+                import { PariBox } from '../../components/PariBox';
+                </code>
 
-              Now, you can finally place an order! Using the newOrder() method from the trader instance, pass in the following arguments:
-                    productIndex: number ⇒ the index of the product for which we want to place an order
-                    isBid: boolean ⇒ determines whether the order is a bid or an offer
-                    Bid = Buy
-                    Ask = Sell
-                    limitPrice: Fractional ⇒ the value at which the order will be filled
-                    maxBaseQty: Fractional ⇒ the size of the order
-
-                    Here is an example of a Long:
-              </p>
-              <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-              trader.newOrder(perpIndex, true, dollars, QUOTE_SIZE).then(async () ={'> {'}
-                             {'console.log(`Placed Buy Limit Order at $${dollars}`);'}
-                             await account(NaN, streamAccount);
-                       {'})'}
-              </code>
-              <p>
-              Here is an example of a Short:
-              </p>
-              <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
-              trader.newOrder(perpIndex, false, dollars, QUOTE_SIZE).then(async () ={'> {'}
-                          {' console.log(`Placed Sell Limit Order at $${dollars}`);'}
-                           await account(NaN, streamAccount); 
-                     {'});'}
-              </code>
-              <p>
-              Congratulations! You have just placed your first orders on Dexterity. 
-              </p>
+                <p>
+                3. Use the PariBox component inside of the HomeView return and pass in ‘1M’ as the time prop to get the 1-minute market contests for BTC-USD.
+                </p>
+                <code className='bg-pink-200 rounded-md mt-3 font-bold pl-2 pr-24 py-2'>
+                
+                <div className="mx-5 my-5 mb-5 md:mb-0"><PariBox time={'1M'} /></div>
+                
+                </code>
+                <Gist style={{width:"100%"}} id="61432a3e7c9dedc06160f702c173093c"></Gist>
               
               {
                   // <ModalNFT/>
@@ -671,9 +660,9 @@ const TimelineItem9 = () => (
   return (
    <>
    {/* <Timeline/> */}
-   <div className='bg-pink-300 rounded-xl my-5 mx-5 flex items-center grid grid-cols-2' style={{height:"350px"}}>
+   <div className='bg-blue-300 rounded-xl my-5 mx-5 flex items-center grid grid-cols-2' style={{height:"280px"}}>
     <div>
-    <h1 className='ml-10 text-6xl font-bold mb-3 '>Dexterity SDK</h1> 
+    <h1 className='ml-10 text-6xl font-bold mb-3 '>Parimutuel TS + React Project</h1> 
     
     <p className='ml-10'>Learn how to connect and use Hxro’s Dexterity Protocol <br/>  </p>
     
@@ -682,16 +671,11 @@ const TimelineItem9 = () => (
     <h1 className='ml-10 text-4xl font-bold mb-3 text-white my-2'>Quick Setup</h1> 
     
     <p className='ml-10 text-white my-4'>
-        1. Previous experience with <Link className='text-pink-200 underline' href={'https://www.youtube.com/watch?v=gp5H0Vw39yw'}>TS </Link><br/>
-        2. Install <Link className='text-pink-200 underline' href={'https://nodejs.org/en/download'}>node.js</Link> and <Link className='text-pink-200 underline'  href={'https://docs.npmjs.com/downloading-and-installing-node-js-and-npm'}>npm</Link>  <br/>
-        3. Create a Typescript project. If you don’t know how, <Link className='text-pink-200 underline' href={'https://www.digitalocean.com/community/tutorials/typescript-new-project'}>here</Link> is an example  <br/>
-        4. Install Solana Web3.js in your project by running <a className='text-pink-200'>npm i @solana/web3.js</a> <br/>
-        5. Install the Dexterity SDK in your project by running <br/> 
-        <p className='ml-4'><a className='text-pink-200'>npm i @hxronetwork/dexterity-ts</a></p>
-        6. Install the Anchor Library in your project by running <br/> 
-        <p className='ml-4'><a className='text-pink-200'>npm i @project-serum/anchor</a></p>
-        7. Install the  base58 encoding library in your project by running <br/> 
-        <p className='ml-4'><a className='text-pink-200'>npm i bs58</a></p>
+    1. Complete the <Link className='text-blue-300 underline' href={'/'}>Parimutuel TS Script </Link> which helps with extracting the<br/> <p className='ml-5'>necessary information needed to showcase users.</p>
+    2. Clone the Parimutuel TS Project repo.<br/>
+                3. Open the Project in code editor:<br/>
+                <p className='ml-5'>{'->'} Run <a className='text-blue-300'>yarn install</a> to install all project dependencies</p>
+                <p className='ml-5'>{'->'} Run <a className='text-blue-300'>yarn dev</a> to run the application</p><br/>
          
          </p>
     

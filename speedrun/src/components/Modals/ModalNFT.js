@@ -7,10 +7,14 @@ import { ImCross } from 'react-icons/im';
 import { useQuery, useMutation, useQueryClient } from "react-query"
 import { getUser, getUsers, updateUser } from "../../../lib/helper"
 import { useWallet } from '@solana/wallet-adapter-react';
-
+import { useProgram, useClaimNFT } from "@thirdweb-dev/react/solana"
 
 
 export default function ModalNFT(props) {
+
+  const { program } = useProgram("6Qo49dRqpscpHmki6v8vixrXNZPEjHRcNJvcb8ifkD9u", "nft-drop")
+  const { mutateAsync: claim, isLoadingNFT, error } = useClaimNFT(program);
+
   const [modal, setModal] = useState(false);
 
     const queryClient = useQueryClient()
@@ -32,6 +36,7 @@ export default function ModalNFT(props) {
    const handleSubmit = async (e) => {
     e.preventDefault();
     // let userName = `${formData.firstname ?? firstname} ${formData.lastname ?? lastname}`;
+    claim({amount: 1});
     let updated = Object.assign({}, data,{points: (points + 0)}, { P1NFT: true })
     await UpdateMutation.mutate(updated)
 }
@@ -103,7 +108,7 @@ export default function ModalNFT(props) {
             
             </div>
             <div className="flex justify-center">
-            <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2" onClick={handleSubmit}>
+            <button className=" bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2" disabled={isLoadingNFT} onClick={handleSubmit}>
               SUBMIT
             </button>
             {/* <a href="http://twitter.com/home?status=I%20am%20happy%20to%20share%20that%20I've%20completed%20the%20first%20task%20on%20@SpeedrunHXRO%20for%20Parimutuel%20SDK.%20%20@HxroNetwork%20@RealHxroLabs%20@ThalesHXRO">
