@@ -144,7 +144,7 @@ export default function ModalP1T5(props) {
                                 </div>
                               )}
           <div className="flex justify-center">
-          <button className={`bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2 ${(validationError || userInput.length === 0) ? 'blur' : ''}`} onClick={handleSubmit} disabled={!!validationError && userInput.length === 0}>
+          <button className={`bg-emerald-300 rounded-full hover:text-white font-bold px-3 py-2 mt-8 mb-2 ${(validationError || userInput.length === 1) ? 'bg-rose-300 ' : ''}`} onClick={handleSubmit} disabled={!!validationError && userInput.length === 0}>
               SUBMIT HERE
             </button>
           {/* <a href="http://twitter.com/home?status=I%20am%20happy%20to%20share%20that%20I've%20completed%20the%20first%20task%20on%20@SpeedrunHXRO%20for%20Parimutuel%20SDK.%20%20@HxroNetwork%20@RealHxroLabs%20@ThalesHXRO">
